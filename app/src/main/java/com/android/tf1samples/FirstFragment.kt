@@ -36,9 +36,37 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonFirst.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+        //loadTextPoll()
+        loadTextAskWidget()
+    }
+
+    fun loadTextPoll() {
         val application = activity?.application
-        (application as Application).sdk.fetchWidgetDetails("a93edd55-44d0-4c17-a309-2281f4e0ac74",
+            (application as Application).sdk.fetchWidgetDetails("a93edd55-44d0-4c17-a309-2281f4e0ac74",
             "text-poll",
+            object : LiveLikeCallback<LiveLikeWidget>() {
+                override fun onResponse(result: LiveLikeWidget?, error: String?) {
+                    result?.let {
+                        binding.widgetView.displayWidget(
+                            application.sdk,
+                            result, showWithInteractionData = true
+                        )
+                    }
+                    error?.let {
+                        Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+    }
+
+    fun loadTextAskWidget() {
+        val application = activity?.application
+        (application as Application).sdk.fetchWidgetDetails("151359d2-de10-4e14-aae1-85edc32f50bc",
+            "text-ask",
             object : LiveLikeCallback<LiveLikeWidget>() {
                 override fun onResponse(result: LiveLikeWidget?, error: String?) {
                     result?.let {

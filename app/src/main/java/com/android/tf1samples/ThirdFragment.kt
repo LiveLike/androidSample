@@ -54,6 +54,31 @@ class ThirdFragment : Fragment() {
             uiDispatcher = Dispatchers.Default
         ) as ContentSession
 
+        loadTextPoll()
+
+        loadTextAskWidget()
+    }
+
+    fun loadTextAskWidget() {
+        (activity?.application as Application).sdk.fetchWidgetDetails("151359d2-de10-4e14-aae1-85edc32f50bc",
+            "text-ask",
+            object : LiveLikeCallback<LiveLikeWidget>() {
+                override fun onResponse(result: LiveLikeWidget?, error: String?) {
+                    result?.let {
+                        val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as TextAskWidgetModel
+                        val askView = CustomTextAskWidget(activity!!).apply {
+                            this.askWidgetModel = viewModel
+                        }
+                        binding.root.addView(askView)
+                    }
+                    error?.let {
+                        Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+    }
+
+    fun loadTextPoll() {
         (activity?.application as Application).sdk.fetchWidgetDetails("a93edd55-44d0-4c17-a309-2281f4e0ac74",
             "text-poll",
             object : LiveLikeCallback<LiveLikeWidget>() {
@@ -71,7 +96,6 @@ class ThirdFragment : Fragment() {
                 }
             })
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

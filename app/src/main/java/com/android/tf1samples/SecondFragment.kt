@@ -38,6 +38,10 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.buttonFirst.setOnClickListener {
+            findNavController().navigate(R.id.action_SecondFragment_to_ThirdFragment)
+        }
+
         binding.widgetView.widgetViewFactory = object : LiveLikeWidgetViewFactory {
             override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
                 return null
@@ -101,8 +105,12 @@ class SecondFragment : Fragment() {
                 return null
             }
 
-            override fun createTextAskWidgetView(imageSliderWidgetModel: TextAskWidgetModel): View? {
-                return null
+            override fun createTextAskWidgetView(askWidgetViewModel: TextAskWidgetModel): View? {
+                return activity?.let {
+                    CustomTextAskWidget(it).apply {
+                        this.askWidgetModel = askWidgetViewModel
+                    }
+                }
             }
 
             override fun createVideoAlertWidgetView(videoAlertWidgetModel: VideoAlertWidgetModel): View? {
@@ -111,6 +119,11 @@ class SecondFragment : Fragment() {
 
         }
 
+        //loadTextPoll()
+        loadTextAskWidget()
+    }
+
+    fun loadTextPoll() {
         (activity?.application as Application).sdk.fetchWidgetDetails("a93edd55-44d0-4c17-a309-2281f4e0ac74",
             "text-poll",
             object : LiveLikeCallback<LiveLikeWidget>() {
@@ -128,6 +141,23 @@ class SecondFragment : Fragment() {
             })
     }
 
+    fun loadTextAskWidget() {
+        (activity?.application as Application).sdk.fetchWidgetDetails("151359d2-de10-4e14-aae1-85edc32f50bc",
+            "text-ask",
+            object : LiveLikeCallback<LiveLikeWidget>() {
+                override fun onResponse(result: LiveLikeWidget?, error: String?) {
+                    result?.let {
+                        binding.widgetView.displayWidget(
+                            (activity?.application as Application).sdk,
+                            result, showWithInteractionData = true
+                        )
+                    }
+                    error?.let {
+                        Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

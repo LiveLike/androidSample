@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.android.tf1samples.databinding.FragmentForthBinding
 import com.android.tf1samples.databinding.FragmentSecondBinding
 import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.fetchWidgetDetails
@@ -17,9 +18,9 @@ import com.livelike.engagementsdk.widget.widgetModel.*
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class ForthFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentForthBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -30,7 +31,7 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentForthBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -43,91 +44,28 @@ class SecondFragment : Fragment() {
         }
 
         binding.widgetView.showTimer = false
-//        binding.widgetView.enableDefaultWidgetTransition = false
-//        binding.widgetView.widgetViewFactory = object : LiveLikeWidgetViewFactory {
-//            override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
-//                return null
-//            }
-//
-//            override fun createCheerMeterView(cheerMeterWidgetModel: CheerMeterWidgetmodel): View? {
-//                return null
-//            }
-//
-//            override fun createImageSliderWidgetView(imageSliderWidgetModel: ImageSliderWidgetModel): View? {
-//                return null
-//            }
-//
-//            override fun createNumberPredictionFollowupWidgetView(
-//                followUpWidgetViewModel: NumberPredictionFollowUpWidgetModel,
-//                isImage: Boolean
-//            ): View? {
-//                return null
-//            }
-//
-//            override fun createNumberPredictionWidgetView(
-//                numberPredictionWidgetModel: NumberPredictionWidgetModel,
-//                isImage: Boolean
-//            ): View? {
-//                return null
-//            }
-//
-//            override fun createPollWidgetView(
-//                pollWidgetModel: PollWidgetModel,
-//                isImage: Boolean
-//            ): View? {
-//                return activity?.let {
-//                    CustomPollWidget(it).apply {
-//                        this.pollWidgetModel = pollWidgetModel
-//                    }
-//                }
-//            }
-//
-//            override fun createPredictionFollowupWidgetView(
-//                followUpWidgetViewModel: FollowUpWidgetViewModel,
-//                isImage: Boolean
-//            ): View? {
-//                return null
-//            }
-//
-//            override fun createPredictionWidgetView(
-//                predictionViewModel: PredictionWidgetViewModel,
-//                isImage: Boolean
-//            ): View? {
-//                return null
-//            }
-//
-//            override fun createQuizWidgetView(
-//                quizWidgetModel: QuizWidgetModel,
-//                isImage: Boolean
-//            ): View? {
-//                return null
-//            }
-//
-//            override fun createSocialEmbedWidgetView(socialEmbedWidgetModel: SocialEmbedWidgetModel): View? {
-//                return null
-//            }
-//
-//            override fun createTextAskWidgetView(askWidgetViewModel: TextAskWidgetModel): View? {
-//                return activity?.let {
-//                    CustomTextAskWidget(it).apply {
-//                        this.askWidgetModel = askWidgetViewModel
-//                    }
-//                }
-//            }
-//
-//            override fun createVideoAlertWidgetView(videoAlertWidgetModel: VideoAlertWidgetModel): View? {
-//                return null
-//            }
-//
-//        }
-
-        loadTextPoll()
-//        loadTextAskWidget()
+//        loadTextPoll()
+        loadSlider()
     }
 
     private fun loadTextPoll() {
         (activity?.application as Application).sdk.fetchWidgetDetails("2d7f63cb-0ff0-4f0a-b3cf-81760d48be33",
             "text-poll") { result, error ->
+            result?.let {
+                binding.widgetView.displayWidget(
+                    (activity?.application as Application).sdk,
+                    result, showWithInteractionData = true
+                )
+            }
+            error?.let {
+                Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun loadSlider() {
+        (activity?.application as Application).sdk.fetchWidgetDetails("b046a70b-460c-4a2a-a26b-9985461916c7",
+            "emoji-slider") { result, error ->
             result?.let {
                 binding.widgetView.displayWidget(
                     (activity?.application as Application).sdk,

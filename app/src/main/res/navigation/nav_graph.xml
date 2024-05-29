@@ -33,7 +33,15 @@
         tools:layout="@layout/fragment_third">
 
         <action
-            android:id="@+id/action_ThirdFragment_to_FirstFragment"
+            android:id="@+id/action_ThirdFragment_to_ForthFragment"
+            app:destination="@id/forthFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forthFragment"
+        android:name="com.android.tf1samples.ForthFragment"
+        android:label="ForthFragment" >
+        <action
+            android:id="@+id/action_forthFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

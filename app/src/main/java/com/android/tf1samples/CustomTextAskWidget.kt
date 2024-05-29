@@ -11,6 +11,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.android.tf1samples.databinding.CustomTextAskBinding
 import com.livelike.engagementsdk.widget.widgetModel.TextAskWidgetModel
+import com.livelike.utils.LiveLikeException
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 class CustomTextAskWidget : ConstraintLayout {
     var askWidgetModel: TextAskWidgetModel? = null
@@ -72,7 +75,10 @@ class CustomTextAskWidget : ConstraintLayout {
                 if (binding.inputTxt.text.toString().trim().isNotEmpty()) {
                     disableUserInput()// user input edit text disbaled
                     disableSendBtn() // send button disbaled
-                    askWidgetModel?.submitReply(binding.inputTxt.text.toString().trim())
+                    askWidgetModel?.submitReply(binding.inputTxt.text.toString().trim()) { result, error ->
+                        result?.let { println(result) }
+                        error?.let { println(LiveLikeException(it)) }
+                    }
                     hideKeyboard()
                     binding.confirmationMessageTv.visibility = ConstraintLayout.VISIBLE
                 }

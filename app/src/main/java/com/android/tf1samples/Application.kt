@@ -19,7 +19,7 @@ class Application : android.app.Application() {
         if (this::sdk.isInitialized)
             println("LiveLikeApplication.initSDK::: $sdk")
         sdk = EngagementSDK(
-            "mOBYul18quffrBDuq2IACKtVuLbUzXIPye5S3bq5",
+            "3FE16VwZNlLDhLYI0i5DjTYtc638v35nBXmyBjxM",
             applicationContext,
             object : ErrorDelegate() {
                 override fun onError(error: String) {

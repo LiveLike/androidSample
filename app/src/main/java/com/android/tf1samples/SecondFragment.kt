@@ -42,6 +42,8 @@ class SecondFragment : Fragment() {
             findNavController().navigate(R.id.action_SecondFragment_to_ThirdFragment)
         }
 
+//        binding.widgetView.showTimer = false
+//        binding.widgetView.enableDefaultWidgetTransition = false
         binding.widgetView.widgetViewFactory = object : LiveLikeWidgetViewFactory {
             override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
                 return null
@@ -119,44 +121,38 @@ class SecondFragment : Fragment() {
 
         }
 
-        //loadTextPoll()
-        loadTextAskWidget()
+        loadTextPoll()
+//        loadTextAskWidget()
     }
 
-    fun loadTextPoll() {
-        (activity?.application as Application).sdk.fetchWidgetDetails("a93edd55-44d0-4c17-a309-2281f4e0ac74",
-            "text-poll",
-            object : LiveLikeCallback<LiveLikeWidget>() {
-                override fun onResponse(result: LiveLikeWidget?, error: String?) {
-                    result?.let {
-                        binding.widgetView.displayWidget(
-                            (activity?.application as Application).sdk,
-                            result, showWithInteractionData = true
-                        )
-                    }
-                    error?.let {
-                        Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            })
+    private fun loadTextPoll() {
+        (activity?.application as Application).sdk.fetchWidgetDetails("2d7f63cb-0ff0-4f0a-b3cf-81760d48be33",
+            "text-poll") { result, error ->
+            result?.let {
+                binding.widgetView.displayWidget(
+                    (activity?.application as Application).sdk,
+                    result, showWithInteractionData = true
+                )
+            }
+            error?.let {
+                Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     fun loadTextAskWidget() {
         (activity?.application as Application).sdk.fetchWidgetDetails("151359d2-de10-4e14-aae1-85edc32f50bc",
-            "text-ask",
-            object : LiveLikeCallback<LiveLikeWidget>() {
-                override fun onResponse(result: LiveLikeWidget?, error: String?) {
-                    result?.let {
-                        binding.widgetView.displayWidget(
-                            (activity?.application as Application).sdk,
-                            result, showWithInteractionData = true
-                        )
-                    }
-                    error?.let {
-                        Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            })
+            "text-ask"){result, error ->
+            result?.let {
+                binding.widgetView.displayWidget(
+                    (activity?.application as Application).sdk,
+                    result, showWithInteractionData = true
+                )
+            }
+            error?.let {
+                Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

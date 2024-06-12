@@ -39,7 +39,17 @@
     <fragment
         android:id="@+id/forthFragment"
         android:name="com.android.tf1samples.ForthFragment"
-        android:label="ForthFragment" >
+        android:label="ForthFragment"
+        tools:layout="@layout/fragment_forth">
+        <action
+            android:id="@+id/action_forthFragment_to_ReactionFragment"
+            app:destination="@id/ReactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ReactionFragment"
+        android:name="com.android.tf1samples.ReactionFragment"
+        android:label="ReactionFragment"
+        tools:layout="@layout/fragment_reaction">
         <action
             android:id="@+id/action_forthFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />

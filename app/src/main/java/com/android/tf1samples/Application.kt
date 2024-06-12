@@ -19,7 +19,7 @@ class Application : android.app.Application() {
         if (this::sdk.isInitialized)
             println("LiveLikeApplication.initSDK::: $sdk")
         sdk = EngagementSDK(
-            "3FE16VwZNlLDhLYI0i5DjTYtc638v35nBXmyBjxM",
+            "8PqSNDgIVHnXuJuGte1HdvOjOqhCFE1ZCR3qhqaS",
             applicationContext,
             object : ErrorDelegate() {
                 override fun onError(error: String) {
@@ -34,7 +34,7 @@ class Application : android.app.Application() {
             accessTokenDelegate = object : AccessTokenDelegate {
                 override fun getAccessToken(): String? {
                     return getSharedPreferences(
-                        "Livelike_profile_sharedprefs",
+                        "Livelike_profile_sharedprefs_8PqSNDgIVHnXuJuGte1HdvOjOqhCFE1ZCR3qhqaS",
                         MODE_PRIVATE
                     ).getString(
                         "Livelike_profile",
@@ -44,7 +44,7 @@ class Application : android.app.Application() {
 
                 override fun storeAccessToken(accessToken: String?) {
                     println("accessToken = [${accessToken}]")
-                    getSharedPreferences("Livelike_profile_sharedprefs", MODE_PRIVATE).edit()
+                    getSharedPreferences("Livelike_profile_sharedprefs_8PqSNDgIVHnXuJuGte1HdvOjOqhCFE1ZCR3qhqaS", MODE_PRIVATE).edit()
                         .putString(
                             "Livelike_profile", accessToken
                         ).apply()

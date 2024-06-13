@@ -187,8 +187,8 @@ class ReactionFragment : Fragment() {
         adapter.list = ArrayList(reactionPack.emojis)
         adapter.notifyDataSetChanged()
         session?.let { reactionSession ->
-//            binding.reactionView.setSession(reactionSession, null)
-//            binding.reactionView.setTargetId(reactionPack.name)
+            binding.reactionView.setSession(reactionSession, null)
+            binding.reactionView.setTargetId(reactionPack.name)
             reactionSession.getUserReactionsCount(
                 listOf(reactionPack.name),
                 LiveLikePagination.FIRST

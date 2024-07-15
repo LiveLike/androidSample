@@ -46,14 +46,15 @@
             }
 
             val application = activity?.application as Application
-            contentSession = application.sdk.createContentSession(programId = "086a57ea-e082-4cd6-a52c-48ab2bbd4ca4", connectToDefaultChatRoom = false) as ContentSession
+            contentSession = application.sdk.createContentSession(programId = "65ca0a62-ffa1-4f09-9e16-47c64d8f9d32", connectToDefaultChatRoom = false) as ContentSession
 
-            loadTextPoll()
+            loadImageQuiz()
+   //         loadTextPoll()
     //        loadTextAskWidget()
         }
 
         fun loadTextAskWidget() {
-            (activity?.application as Application).sdk.fetchWidgetDetails("151359d2-de10-4e14-aae1-85edc32f50bc",
+            (activity?.application as Application).sdk.fetchWidgetDetails("bba359f5-a288-4fd2-b222-fad298dd3391",
                 "text-ask"){result, error ->
                 result?.let {
                     val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as TextAskWidgetModel
@@ -75,6 +76,22 @@
                     val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as PollWidgetModel
                     val pollView = CustomPollWidget(requireActivity()).apply {
                         this.pollWidgetModel = viewModel
+                    }
+                    binding.rootView.addView(pollView)
+                }
+                error?.let {
+                    Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        private fun loadImageQuiz() {
+            (activity?.application as Application).sdk.fetchWidgetDetails("350e01ca-5c45-4d1c-a0ad-2b75424caab7",
+                "image-quiz"){result, error ->
+                result?.let {
+                    val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as QuizWidgetModel
+                    val pollView = CustomQuizWidget(requireActivity()).apply {
+                        this.quizWidgetModel = viewModel
                     }
                     binding.rootView.addView(pollView)
                 }

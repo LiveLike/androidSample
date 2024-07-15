@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/quiz_child_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/quiz_answer_default_background">
+
+    <FrameLayout
+        android:id="@+id/imageButton_lay"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/quizImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/image"
+            tools:src="@tools:sample/avatars" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/imageText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/livelike_option_font"
+        android:gravity="start"
+        android:lineSpacingExtra="@dimen/widget_option_item_image_text_line_spacing_extra"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageBar"
+        app:layout_constraintEnd_toStartOf="@+id/imagePercentage"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_lay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Option text goes here" />
+
+    <ProgressBar
+        android:id="@+id/imageBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="8dp"
+        android:progressDrawable="@drawable/progress_background"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageText"
+        app:layout_constraintStart_toStartOf="@+id/imageText"
+        app:layout_constraintTop_toBottomOf="@+id/imageText"
+        tools:progress="50"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/imagePercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/livelike_header_font"
+        android:gravity="end"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="50%" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="livelike_submit_btn_color_pressed">#CC20CC</color>
+    <color name="livelike_submit_btn_color">#AACC20CC</color>
+
+    <color name="livelike_quiz_gradient_right">#e6c864c8</color>
+    <color name="livelike_quiz_gradient_left">#e69650be</color>
+    <color name="livelike_quiz_correct">#4c8d8a</color>
+    <color name="livelike_quiz_wrong">#ac4135</color>
 </resources>

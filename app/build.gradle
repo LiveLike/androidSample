@@ -25,11 +25,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_18
-        targetCompatibility JavaVersion.VERSION_18
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '18'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
@@ -39,8 +39,8 @@ android {
 
 dependencies {
 
-    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.95.4'
-    implementation 'com.livelike.android-engagement-sdk:livelike-ui-reactions:2.95.4'
+    implementation 'com.livelike.android-engagement-sdk:engagementsdk:24274958c2ddbd1fd6c1aced2caca8734239f963'
+    implementation 'com.livelike.android-engagement-sdk:livelike-ui-reactions:24274958c2ddbd1fd6c1aced2caca8734239f963'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

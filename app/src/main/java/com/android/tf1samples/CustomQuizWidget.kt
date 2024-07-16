@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.tf1samples.databinding.CustomQuizWidgetBinding
 import com.livelike.engagementsdk.LiveLikeWidget
-import com.livelike.engagementsdk.publicapis.LiveLikeCallback
-import com.livelike.engagementsdk.widget.data.models.QuizWidgetUserInteraction
 import com.livelike.engagementsdk.widget.viewModel.QuizViewModel
 import com.livelike.engagementsdk.widget.viewModel.WidgetStates
 import com.livelike.engagementsdk.widget.widgetModel.QuizWidgetModel
@@ -152,9 +150,32 @@ class CustomQuizWidget : ConstraintLayout {
 
     //load previous interaction
     private fun getInteractionHistory(liveLikeWidget: LiveLikeWidget){
-        //get interaction history
         if (quizWidgetModel?.getUserInteraction() == null) {
-            quizWidgetModel?.loadInteractionHistory(object :
+            quizWidgetModel?.loadInteractionHistory { result, error ->
+                result?.let {
+                    if(it.isNotEmpty()){
+                        //this is to set options right & wrong
+                        for (itemOption in liveLikeWidget.choices!!) {
+                            adapter?.optionIdCount?.set(itemOption.id,
+                                itemOption.answerCount ?: 0
+                            )
+                        }
+
+                        for (element in result) {
+                            adapter?.restoreSelectedPosition(element.choiceId) //restores user interaction
+                            uiScope.launch {
+                                renderResultState()
+                                adapter?.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                error?.let {
+                  Log.d("quiz interaction",error)
+                }
+            }
+
+           /* quizWidgetModel?.loadInteractionHistory(object :
                 LiveLikeCallback<List<QuizWidgetUserInteraction>>() {
                 override fun onResponse(
                     result: List<QuizWidgetUserInteraction>?,
@@ -181,7 +202,7 @@ class CustomQuizWidget : ConstraintLayout {
                         }
                     }
                 }
-            })
+            })*/
         }
     }
 

@@ -46,7 +46,7 @@
             }
 
             val application = activity?.application as Application
-            contentSession = application.sdk.createContentSession(programId = "65ca0a62-ffa1-4f09-9e16-47c64d8f9d32", connectToDefaultChatRoom = false) as ContentSession
+            contentSession = application.sdk.createContentSession(programId = "09d93835-ee52-4757-976c-ea09d6a5798c", connectToDefaultChatRoom = false) as ContentSession
 
             loadImageQuiz()
    //         loadTextPoll()
@@ -86,7 +86,7 @@
         }
 
         private fun loadImageQuiz() {
-            (activity?.application as Application).sdk.fetchWidgetDetails("350e01ca-5c45-4d1c-a0ad-2b75424caab7",
+            (activity?.application as Application).sdk.fetchWidgetDetails("97474eb2-4434-4bde-8a26-bb0a9ff44c21",
                 "image-quiz"){result, error ->
                 result?.let {
                     val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as QuizWidgetModel

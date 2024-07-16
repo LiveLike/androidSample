@@ -12,4 +12,6 @@
     <string name="submit">SUBMIT</string>
     <string name="percentage_format">%d%%</string>
     <string name="quiz_expired">QUIZ EXPIRED</string>
+
+    <string name="quiz_tag">QUIZ</string>
 </resources>

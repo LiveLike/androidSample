@@ -129,6 +129,7 @@ class CustomQuizWidget : ConstraintLayout {
                         quizWidgetModel?.voteResults?.subscribe(this.hashCode()) { result ->
                             val op =
                                 result?.choices?.find { option -> option.id == adapter.getSelectedOption()?.id }
+
                             result?.choices?.let { options ->
                                 for (itemOption in options) {
                                     adapter.optionIdCount[itemOption.id] = itemOption.answerCount ?: 0
@@ -174,35 +175,6 @@ class CustomQuizWidget : ConstraintLayout {
                   Log.d("quiz interaction",error)
                 }
             }
-
-           /* quizWidgetModel?.loadInteractionHistory(object :
-                LiveLikeCallback<List<QuizWidgetUserInteraction>>() {
-                override fun onResponse(
-                    result: List<QuizWidgetUserInteraction>?,
-                    error: String?
-                ) {
-                    if (result != null) {
-                        if (result.isNotEmpty()) {
-                            Log.d("interaction result",result.toString())
-
-                            //this is to set options right & wrong
-                            for (itemOption in liveLikeWidget.choices!!) {
-                                adapter?.optionIdCount?.set(itemOption.id,
-                                    itemOption.answerCount ?: 0
-                                )
-                            }
-
-                            for (element in result) {
-                                adapter?.restoreSelectedPosition(element.choiceId) //restores user interaction
-                                uiScope.launch {
-                                    renderResultState()
-                                    adapter?.notifyDataSetChanged()
-                                }
-                            }
-                        }
-                    }
-                }
-            })*/
         }
     }
 
@@ -216,14 +188,12 @@ class CustomQuizWidget : ConstraintLayout {
     private fun enableLockButton() {
         binding.btnLock.apply {
             isEnabled = true
-           // alpha = 1f
         }
     }
 
     private fun disableLockButton() {
         binding.btnLock.apply {
             isEnabled = false
-            //alpha = 0.5f
         }
     }
 }

@@ -86,7 +86,7 @@
         }
 
         private fun loadImageQuiz() {
-            (activity?.application as Application).sdk.fetchWidgetDetails("97474eb2-4434-4bde-8a26-bb0a9ff44c21",
+            (activity?.application as Application).sdk.fetchWidgetDetails("0e9f6d09-7bf4-4116-8eec-4256245c4e70",
                 "image-quiz"){result, error ->
                 result?.let {
                     val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as QuizWidgetModel

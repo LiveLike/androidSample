@@ -20,7 +20,7 @@
         android:letterSpacing="0.08"
         android:fontFamily="@font/tnt_digital_bold"
         android:textColor="@color/livelike_quiz_tag"
-        android:textSize="12sp" />
+        android:textSize="@dimen/quiz_tag_text_size" />
 
     <TextView
         android:id="@+id/txt_title"
@@ -31,7 +31,7 @@
         android:fontFamily="@font/tnt_digital_medium"
         android:gravity="start"
         android:textColor="@color/livelike_quiz_text_color"
-        android:textSize="14sp"
+        android:textSize="@dimen/quiz_title_text_size"
         android:letterSpacing="0.03"
         tools:text="Who will score more goals in Euro 2024?" />
 

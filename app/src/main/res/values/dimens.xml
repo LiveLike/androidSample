@@ -2,5 +2,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="rounded_corner_box_radius">4dp</dimen>
 
-
+    <dimen name="quiz_item_text_size">14sp</dimen>
+    <dimen name="quiz_percent_text_size">18sp</dimen>
+    <dimen name="quiz_tag_text_size">12sp</dimen>
+    <dimen name="quiz_title_text_size">14sp</dimen>
 </resources>

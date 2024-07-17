@@ -40,6 +40,7 @@
         android:textAlignment="textStart"
         android:textColor="@color/livelike_quiz_text_color"
         android:textSize="14sp"
+        android:ellipsize="end"
         app:layout_constraintBottom_toTopOf="@+id/imageBar"
         app:layout_constraintEnd_toStartOf="@+id/imagePercentage"
         app:layout_constraintStart_toEndOf="@+id/imageButton_lay"

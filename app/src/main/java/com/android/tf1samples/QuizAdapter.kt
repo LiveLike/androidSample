@@ -89,31 +89,12 @@ class QuizListAdapter(
         //change background based on correct and wrong
         optionIdCount[item.id]?.let {
             if(selectedIndex > -1){
-                /*if (selectedIndex == position && item.isCorrect == false){
-                    holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_wrong_background)
-                    holder.itemBinding.imageText.setTextColor(ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_wrong))
-                    holder.itemBinding.imagePercentage.setTextColor(ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_wrong))
-
-                    holder.itemBinding.imageBar.progressDrawable =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_wrong_background)
-                }
-
-
-                if (item.isCorrect == true) {
-                    holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_anwer_correct_background)
-                    holder.itemBinding.imageText.setTextColor(ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_correct))
-                    holder.itemBinding.imagePercentage.setTextColor(ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_correct))
-                    holder.itemBinding.imageBar.progressDrawable =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_correct_background)
-
-                }*/
-
                 if(item.isCorrect == true){
-                    holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_anwer_correct_background)
+                    if(selectedIndex == position){
+                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_selected_correct)
+                    }else{
+                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_anwer_correct_background)
+                    }
                     holder.itemBinding.imageText.setTextColor(
                         ContextCompat.getColor(
                         holder.itemView.context,R.color.livelike_quiz_correct))
@@ -123,7 +104,11 @@ class QuizListAdapter(
                     holder.itemBinding.imageBar.progressDrawable =
                         ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_correct_background)
                 }else{
-                    holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_wrong_background)
+                    if(selectedIndex == position){
+                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_selected_wrong)
+                    }else{
+                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_wrong_background)
+                    }
                     holder.itemBinding.imageText.setTextColor(
                         ContextCompat.getColor(
                         holder.itemView.context,R.color.livelike_quiz_wrong))
@@ -165,12 +150,6 @@ class QuizListAdapter(
     fun restoreSelectedPosition(optionId: String?) {
         optionId?.let { id ->
             selectedIndex = list.indexOfFirst { it.id == id }
-            /*if(selectedIndex >  -1){
-                val option = list[selectedIndex]
-                Log.d("interacted restore",option.answerCount.toString())
-                optionIdCount[id] = option.answerCount ?: 0
-                Log.d("interaction options",optionIdCount.toString())
-            }*/
         }
     }
 }

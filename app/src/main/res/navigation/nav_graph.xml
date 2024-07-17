@@ -51,16 +51,16 @@
         android:label="ReactionFragment"
         tools:layout="@layout/fragment_reaction">
         <action
-            android:id="@+id/action_ReactionFragment_to_ComposeQuizFragment"
-            app:destination="@id/ComposeQuizFragment" />
+            android:id="@+id/action_ReactionFragment_to_FifthFragment"
+            app:destination="@id/FifthFragment" />
     </fragment>
     <fragment
-        android:id="@+id/ComposeQuizFragment"
-        android:name="com.android.tf1samples.ComposeQuizFragment"
-        android:label="ComposeQuizFragment"
+        android:id="@+id/FifthFragment"
+        android:name="com.android.tf1samples.FifthFragment"
+        android:label="FifthFragment"
         tools:layout="@layout/fragment_reaction">
         <action
-            android:id="@+id/action_ComposeQuizFragment_to_FirstFragment"
+            android:id="@+id/action_FifthFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
 
     </fragment>

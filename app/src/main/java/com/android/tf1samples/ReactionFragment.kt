@@ -60,7 +60,7 @@ class ReactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonLast.setOnClickListener {
-            findNavController().navigate(R.id.action_ReactionFragment_to_ComposeQuizFragment)
+            findNavController().navigate(R.id.action_ReactionFragment_to_FifthFragment)
         }
 
 

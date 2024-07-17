@@ -36,9 +36,9 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
         val userReaction = userReactionList.find { it.reactionId == reaction.id }
         holder.itemBinding.txtReactionCount.text = "${userReactionCount?.count ?: 0}"
         if (userReaction?.reactedById == userId) {
-            holder.itemBinding.imgReaction.setBackgroundResource(R.drawable.reaction_pack_child_background_selected)
+            holder.itemBinding.reactionItemLayout.setBackgroundResource(R.drawable.reaction_pack_child_background_selected)
         } else {
-            holder.itemBinding.imgReaction.setBackgroundColor(Color.TRANSPARENT)
+            holder.itemBinding.reactionItemLayout.setBackgroundResource(R.drawable.reaction_background_with_corner)
         }
 
         holder.itemBinding.imgReaction.setOnClickListener {

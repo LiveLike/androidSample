@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.android.tf1samples.databinding.FragmentReactionBinding
 import com.google.android.material.tabs.TabLayout
 import com.livelike.common.profile
@@ -57,6 +58,12 @@ class ReactionFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonLast.setOnClickListener {
+            findNavController().navigate(R.id.action_ReactionFragment_to_ComposeQuizFragment)
+        }
+
+
         binding.rcylReactions.adapter = adapter
         session =
             (activity?.application as Application).sdk.createReactionSession(

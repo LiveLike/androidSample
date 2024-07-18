@@ -40,8 +40,8 @@ android {
 
 dependencies {
 
-    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.96.3'
-    implementation 'com.livelike.android-engagement-sdk:livelike-ui-reactions:2.96.3'
+    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2fe4838993968f18948be5a36116535194a657ac'
+    implementation 'com.livelike.android-engagement-sdk:livelike-ui-reactions:2fe4838993968f18948be5a36116535194a657ac'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

@@ -47,13 +47,24 @@
     </fragment>
     <fragment
         android:id="@+id/ReactionFragment"
-        android:name="com.android.tf1samples.ReactionFragment"
+        android:name="com.android.tf1samples.ReactionBarFragment"
         android:label="ReactionFragment"
         tools:layout="@layout/fragment_reaction">
         <action
-            android:id="@+id/action_ReactionFragment_to_FifthFragment"
+            android:id="@+id/action_ReactionFragment_to_ReactionPickerFragment"
+            app:destination="@id/ReactionPickerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ReactionPickerFragment"
+        android:name="com.android.tf1samples.ReactionPickerFragment"
+        android:label="ReactionPickerFragment"
+        tools:layout="@layout/fragment_reaction_picker">
+        <action
+            android:id="@+id/action_ReactionPickerFragment_to_FifthFragment"
             app:destination="@id/FifthFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/FifthFragment"
         android:name="com.android.tf1samples.FifthFragment"

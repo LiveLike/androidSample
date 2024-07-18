@@ -1,7 +1,6 @@
 package com.android.tf1samples
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -36,7 +35,7 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
         val userReaction = userReactionList.find { it.reactionId == reaction.id }
         holder.itemBinding.txtReactionCount.text = "${userReactionCount?.count ?: 0}"
         if (userReaction?.reactedById == userId) {
-            holder.itemBinding.reactionItemLayout.setBackgroundResource(R.drawable.reaction_pack_child_background_selected)
+            holder.itemBinding.reactionItemLayout.setBackgroundResource(R.drawable.reaction_background_corner_selected)
         } else {
             holder.itemBinding.reactionItemLayout.setBackgroundResource(R.drawable.reaction_background_with_corner)
         }

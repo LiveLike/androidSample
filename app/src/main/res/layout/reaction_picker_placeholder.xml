@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/constraint_layout_margin_top"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:paddingLeft="@dimen/constraint_layout_padding_left"
+        android:paddingTop="@dimen/constraint_layout_padding_top"
+        android:paddingRight="@dimen/constraint_layout_padding_right"
+        android:paddingBottom="@dimen/constraint_layout_padding_bottom">
+
+        <ImageView
+            android:id="@+id/placeholder_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/reaction_placeholder_margin_left"
+            android:layout_marginTop="@dimen/reaction_placeholder_margin_top"
+            android:layout_marginRight="@dimen/reaction_placeholder_margin_right"
+            android:layout_marginBottom="@dimen/reaction_placeholder_margin_bottom"
+            android:paddingLeft="@dimen/reaction_placeholder_padding_left"
+            android:paddingTop="@dimen/reaction_placeholder_padding_top"
+            android:paddingRight="@dimen/reaction_placeholder_padding_right"
+            android:paddingBottom="@dimen/reaction_placeholder_padding_bottom"
+            android:src="@drawable/ic_add_reaction"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+           />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

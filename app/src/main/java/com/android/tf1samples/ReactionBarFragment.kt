@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.android.tf1samples.databinding.FragmentReactionBinding
-import com.google.android.material.tabs.TabLayout
 import com.livelike.common.profile
 import com.livelike.engagementsdk.chat.chatreaction.ReactionPack
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
@@ -24,7 +23,7 @@ import kotlinx.coroutines.launch
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class ReactionFragment : Fragment() {
+class ReactionBarFragment : Fragment() {
 
     private var session: LiveLikeReactionSession? = null
     private var reactionSpaceId: String? = null
@@ -39,11 +38,6 @@ class ReactionFragment : Fragment() {
         super.onCreate(savedInstanceState)
         reactionSpaceId = "cba07b97-0c39-4b9c-827b-41fad1225ab7"//it.getString(ARG_PARAM1)
         targetGroupId = "135f341f-9daf-461c-8c02-239f76aaf85f"
-
-//        arguments?.let {
-//            reactionSpaceId = "cba07b97-0c39-4b9c-827b-41fad1225ab7"//it.getString(ARG_PARAM1)
-//            targetGroupId = "135f341f-9daf-461c-8c02-239f76aaf85f" //it.getString(ARG_PARAM2)
-//        }
     }
 
     override fun onCreateView(
@@ -60,11 +54,10 @@ class ReactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonLast.setOnClickListener {
-            findNavController().navigate(R.id.action_ReactionFragment_to_FifthFragment)
+            findNavController().navigate(R.id.action_ReactionFragment_to_ReactionPickerFragment)
         }
-
-
         binding.rcylReactions.adapter = adapter
+
         session =
             (activity?.application as Application).sdk.createReactionSession(
                 reactionSpaceId,
@@ -83,32 +76,10 @@ class ReactionFragment : Fragment() {
                 adapter.session = reactionSession
                 reactionSession.getReactionPacks { result, error ->
                     result?.let { list ->
-                        for (it in list) {
-                            binding.reactionTabs.addTab(
-                                binding.reactionTabs.newTab().setText(it.name).setTag(it)
-                            )
-                        }
                         reactionPackList = list
-                        binding.reactionTabs.getTabAt(0)?.let { tab ->
-                            setReactionPack((tab.tag as ReactionPack))
+                        reactionPackList?.let {
+                            setReactionPack(it[0])
                         }
-                        binding.reactionTabs.addOnTabSelectedListener(object :
-                            TabLayout.OnTabSelectedListener {
-                            override fun onTabSelected(tab: TabLayout.Tab?) {
-                                tab?.let { tab1 ->
-                                    setReactionPack((tab1.tag as ReactionPack))
-                                }
-                            }
-
-                            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-                            }
-
-                            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-                            }
-
-                        })
 
                     }
                     error?.let {
@@ -194,8 +165,8 @@ class ReactionFragment : Fragment() {
         adapter.list = ArrayList(reactionPack.emojis)
         adapter.notifyDataSetChanged()
         session?.let { reactionSession ->
-            binding.reactionView.setSession(reactionSession, null)
-            binding.reactionView.setTargetId(reactionPack.name)
+
+
             reactionSession.getUserReactionsCount(
                 listOf(reactionPack.name),
                 LiveLikePagination.FIRST
@@ -218,6 +189,7 @@ class ReactionFragment : Fragment() {
                 LiveLikePagination.FIRST, reactionById = currentUser?.userId,
                 liveLikeCallback = { result, error ->
                     result?.let {
+
                         adapter.userReactionList = ArrayList(it)
                         adapter.notifyDataSetChanged()
                     }
@@ -232,7 +204,7 @@ class ReactionFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(reactionSpaceId: String, targetGroupId: String) =
-            ReactionFragment().apply {
+            ReactionBarFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, reactionSpaceId)
                     putString(ARG_PARAM2, targetGroupId)

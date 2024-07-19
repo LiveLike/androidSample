@@ -23,9 +23,6 @@
 
         private var _binding: FragmentThirdBinding? = null
         private lateinit var contentSession: ContentSession
-
-        // This property is only valid between onCreateView and
-        // onDestroyView.
         private val binding get() = _binding!!
 
         override fun onCreateView(
@@ -46,48 +43,15 @@
             }
 
             val application = activity?.application as Application
-            contentSession = application.sdk.createContentSession(programId = "5f0f0a74-3798-47ed-9246-93e48230857b", connectToDefaultChatRoom = false) as ContentSession
+            contentSession = application.sdk.createContentSession(programId = "5f0f0a74-3798-47ed-9246-93e48230857b", connectToDefaultChatRoom = false) as ContentSession //create content session with programId
 
-            loadImageQuiz()
-   //         loadTextPoll()
-    //        loadTextAskWidget()
+            loadImageQuiz(widgetId = "21248032-017d-4101-86c7-3a4693025113", widgetKind = "image-quiz")  //pass your own widgetId and widgetKind
         }
 
-        fun loadTextAskWidget() {
-            (activity?.application as Application).sdk.fetchWidgetDetails("bba359f5-a288-4fd2-b222-fad298dd3391",
-                "text-ask"){result, error ->
-                result?.let {
-                    val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as TextAskWidgetModel
-                    val askView = CustomTextAskWidget(requireActivity()).apply {
-                        this.askWidgetModel = viewModel
-                    }
-                    binding.root.addView(askView)
-                }
-                error?.let {
-                    Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
 
-        private fun loadTextPoll() {
-            (activity?.application as Application).sdk.fetchWidgetDetails("2d7f63cb-0ff0-4f0a-b3cf-81760d48be33",
-                "text-poll"){result, error ->
-                result?.let {
-                    val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as PollWidgetModel
-                    val pollView = CustomPollWidget(requireActivity()).apply {
-                        this.pollWidgetModel = viewModel
-                    }
-                    binding.rootView.addView(pollView)
-                }
-                error?.let {
-                    Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        private fun loadImageQuiz() {
-            (activity?.application as Application).sdk.fetchWidgetDetails("21248032-017d-4101-86c7-3a4693025113",
-                "image-quiz"){result, error ->
+        private fun loadImageQuiz(widgetId:String,widgetKind:String) {
+            (activity?.application as Application).sdk.fetchWidgetDetails(widgetId,
+                widgetKind){result, error ->
                 result?.let {
                     val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as QuizWidgetModel
                     val pollView = CustomQuizWidget(requireActivity()).apply {
@@ -101,21 +65,6 @@
             }
         }
 
-        private fun loadImageSlider() {
-            (activity?.application as Application).sdk.fetchWidgetDetails("2d7f63cb-0ff0-4f0a-b3cf-81760d48be33",
-                "emoji-slider"){result, error ->
-                result?.let {
-                    val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as PollWidgetModel
-                    val pollView = CustomPollWidget(requireActivity()).apply {
-                        this.pollWidgetModel = viewModel
-                    }
-                    binding.rootView.addView(pollView)
-                }
-                error?.let {
-                    Toast.makeText(activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
         override fun onDestroyView() {
             super.onDestroyView()
             _binding = null

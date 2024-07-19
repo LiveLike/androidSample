@@ -11,7 +11,7 @@ import com.livelike.engagementsdk.OptionsItem
 import com.livelike.utils.parseISODateTime
 import kotlinx.coroutines.flow.MutableStateFlow
 
-//quiz adapter
+
 class QuizListAdapter(
     private val list: ArrayList<OptionsItem>
 ): RecyclerView.Adapter<QuizListAdapter.QuizItemViewHolder>(){
@@ -21,7 +21,7 @@ class QuizListAdapter(
     var quizListener: QuizListener? = null
     var interactiveUntil: String? = null
 
-    val selectionLockedFlow = MutableStateFlow<Boolean>(false)
+    val selectionLockedFlow = MutableStateFlow(false)
 
     interface QuizListener {
         fun onSelectOption(id: String)
@@ -88,40 +88,34 @@ class QuizListAdapter(
 
         //change background based on correct and wrong
         optionIdCount[item.id]?.let {
-            if(selectedIndex > -1){
-                if(item.isCorrect == true){
-                    if(selectedIndex == position){
-                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_selected_correct)
-                    }else{
-                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_anwer_correct_background)
-                    }
-                    holder.itemBinding.imageText.setTextColor(
-                        ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_correct))
-                    holder.itemBinding.imagePercentage.setTextColor(
-                        ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_correct))
-                    holder.itemBinding.imageBar.progressDrawable =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_correct_background)
-                }else{
-                    if(selectedIndex == position){
-                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_selected_wrong)
-                    }else{
-                        holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_wrong_background)
-                    }
-                    holder.itemBinding.imageText.setTextColor(
-                        ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_wrong))
-                    holder.itemBinding.imagePercentage.setTextColor(
-                        ContextCompat.getColor(
-                        holder.itemView.context,R.color.livelike_quiz_wrong))
+            val isCorrect = item.isCorrect == true
+            val isSelected = selectedIndex == position
 
-                    holder.itemBinding.imageBar.progressDrawable =
-                        ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_wrong_background)
-                }
+            val backgroundRes = when {
+                isCorrect && isSelected -> R.drawable.quiz_answer_selected_correct
+                isCorrect -> R.drawable.quiz_anwer_correct_background
+                !isCorrect && isSelected -> R.drawable.quiz_answer_selected_wrong
+                else -> R.drawable.quiz_answer_wrong_background
             }
 
+            val textColor = if (isCorrect) {
+                ContextCompat.getColor(holder.itemView.context, R.color.livelike_quiz_correct)
+            } else {
+                ContextCompat.getColor(holder.itemView.context, R.color.livelike_quiz_wrong)
+            }
+
+            val progressDrawable = if (isCorrect) {
+                ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_correct_background)
+            } else {
+                ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_wrong_background)
+            }
+
+            holder.itemBinding.quizChildLayout.setBackgroundResource(backgroundRes)
+            holder.itemBinding.imageText.setTextColor(textColor)
+            holder.itemBinding.imagePercentage.setTextColor(textColor)
+            holder.itemBinding.imageBar.progressDrawable = progressDrawable
         }
+
 
         holder.itemBinding.quizChildLayout.setOnClickListener {
             //checks expiry interactive until

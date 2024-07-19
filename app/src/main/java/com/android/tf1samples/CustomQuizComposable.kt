@@ -25,14 +25,14 @@ import com.livelike.engagementsdk.widget.widgetModel.QuizWidgetModel
 
 @Composable
 fun CustomImageQuiz(
-    sdk: EngagementSDK, // Replace with actual SDK type
-    contentSession: ContentSession,
+    sdk: EngagementSDK, // pass the sdk instance
+    contentSession: ContentSession, //pass content session instance after creating it with program Id
     widgetId: String,
     widgetKind: String
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
-            .background(Color.Black)// Use padding here to simulate margin
+            .background(Color.Black)
     ){
         Surface(
             modifier = Modifier.fillMaxSize().padding(top=40.dp),

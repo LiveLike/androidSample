@@ -16,7 +16,7 @@ class FifthFragment : Fragment() {
     ): View? {
         val application = requireActivity().application as Application
         val contentSession = application.sdk.createContentSession(
-            programId = "5f0f0a74-3798-47ed-9246-93e48230857b",
+            programId = "5f0f0a74-3798-47ed-9246-93e48230857b", // pass on your program Id
             connectToDefaultChatRoom = false
         ) as ContentSession
 
@@ -25,8 +25,8 @@ class FifthFragment : Fragment() {
                 CustomImageQuiz(
                     sdk = application.sdk,
                     contentSession = contentSession,
-                    widgetId = "21248032-017d-4101-86c7-3a4693025113",
-                    widgetKind = "image-quiz"
+                    widgetId = "e9945806-c374-4f79-bfbd-f346d3a4820d", //pass widget Id
+                    widgetKind = "image-quiz" //pass widget kind
                 )
             }
         }

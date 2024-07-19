@@ -17,7 +17,7 @@ import com.livelike.utils.parseISODateTime
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class CustomQuizWidget : ConstraintLayout {
+class CustomImageQuizWidget : ConstraintLayout {
     var quizWidgetModel: QuizWidgetModel? = null
     private lateinit var binding: CustomQuizWidgetBinding
     private val uiScope = MainScope()

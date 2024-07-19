@@ -7,14 +7,9 @@
     import android.view.ViewGroup
     import android.widget.Toast
     import androidx.navigation.fragment.findNavController
-    import com.android.tf1samples.databinding.FragmentSecondBinding
     import com.android.tf1samples.databinding.FragmentThirdBinding
-    import com.livelike.common.LiveLikeKotlin
     import com.livelike.engagementsdk.*
-    import com.livelike.engagementsdk.publicapis.LiveLikeCallback
-    import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
     import com.livelike.engagementsdk.widget.widgetModel.*
-    import kotlinx.coroutines.Dispatchers
 
     /**
      * A simple [Fragment] subclass as the second destination in the navigation.
@@ -54,7 +49,7 @@
                 widgetKind){result, error ->
                 result?.let {
                     val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as QuizWidgetModel
-                    val pollView = CustomQuizWidget(requireActivity()).apply {
+                    val pollView = CustomImageQuizWidget(requireActivity()).apply {
                         this.quizWidgetModel = viewModel
                     }
                     binding.rootView.addView(pollView)

@@ -20,6 +20,8 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
     var session: LiveLikeReactionSession? = null
     var userId: String? = null
 
+    var onPopupClose: (() -> Unit)? = null
+
     inner class ReactionViewHolder(var itemBinding: ReactionPackChildBinding) : RecyclerView.ViewHolder(itemBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReactionViewHolder {
@@ -40,7 +42,7 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
             holder.itemBinding.reactionItemLayout.setBackgroundResource(R.drawable.reaction_background_with_corner)
         }
 
-        holder.itemBinding.imgReaction.setOnClickListener {
+        holder.itemView.setOnClickListener {
             session?.let { reactionSession ->
                 if (userReaction != null) {
                     userReaction.id.let { userReactionId ->
@@ -55,6 +57,7 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 notifyDataSetChanged()
+                                onPopupClose?.invoke()
                             }
                             error?.let {
                                 Toast.makeText(
@@ -62,6 +65,7 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
                                     it,
                                     Toast.LENGTH_SHORT
                                 ).show()
+                               // onPopupClose?.invoke()
                             }
                         }
                     }
@@ -78,10 +82,12 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 notifyDataSetChanged()
+                                onPopupClose?.invoke()
                             }
                             error?.let {
                                 Toast.makeText(holder.itemView.context, it, Toast.LENGTH_SHORT)
                                     .show()
+                               // onPopupClose?.invoke()
                             }
                         })
                 }

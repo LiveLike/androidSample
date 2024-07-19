@@ -203,7 +203,7 @@ class ReactionPickerFragment:Fragment() {
             view,
             Gravity.NO_GRAVITY,
             location[0],
-            location[1] - dpToPx(55f)
+            location[1] - dpToPx(32f)
         )
 
         // Debug log

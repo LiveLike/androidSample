@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,7 +46,7 @@ fun CustomImageQuiz(
                 ) { result, error ->
                     result?.let {
                         val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as QuizWidgetModel
-                        val quizView = CustomQuizWidget(context).apply {
+                        val quizView = CustomImageQuizWidget(context).apply {
                             this.quizWidgetModel = viewModel
                         }
                         rootView.value = quizView

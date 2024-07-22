@@ -16,6 +16,7 @@ import com.livelike.engagementsdk.createReactionSession
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 import com.livelike.engagementsdk.reaction.LiveLikeReactionSession
+import com.livelike.engagementsdk.reaction.models.UserReactionCount
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -43,8 +44,7 @@ class ReactionBarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentReactionBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -112,7 +112,7 @@ class ReactionBarFragment : Fragment() {
                             }
                         } else {
                             adapter.userReactionCountList.add(
-                                com.livelike.engagementsdk.reaction.models.UserReactionCount(
+                                UserReactionCount(
                                     reactionId = reaction.reactionId,
                                     count = 1,
                                     selfReactedUserReactionId = when (reaction.reactedById == currentUser?.userId) {
@@ -166,37 +166,50 @@ class ReactionBarFragment : Fragment() {
         adapter.notifyDataSetChanged()
         session?.let { reactionSession ->
 
+            getUserReactionCount(reactionSession,reactionPack)
+            getUserReactions(reactionSession)
 
-            reactionSession.getUserReactionsCount(
-                listOf(reactionPack.name),
-                LiveLikePagination.FIRST
-            ) { result, error ->
-                result?.let { list ->
-                    val targetUserReactionCount = list.find {
-                        it.targetId == reactionPack.name
-                    }
-                    adapter.userReactionCountList = ArrayList(
-                        targetUserReactionCount?.reactions
-                            ?: emptyList<com.livelike.engagementsdk.reaction.models.UserReactionCount>()
-                    )
+        }
+    }
+
+
+    private fun getUserReactions(reactionSession: LiveLikeReactionSession,){
+        reactionSession.getUserReactions(
+            LiveLikePagination.FIRST, reactionById = currentUser?.userId,
+            liveLikeCallback = { result, error ->
+                result?.let {
+
+                    adapter.userReactionList = ArrayList(it)
                     adapter.notifyDataSetChanged()
                 }
                 error?.let {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                 }
-            }
-            reactionSession.getUserReactions(
-                LiveLikePagination.FIRST, reactionById = currentUser?.userId,
-                liveLikeCallback = { result, error ->
-                    result?.let {
+            })
+    }
 
-                        adapter.userReactionList = ArrayList(it)
-                        adapter.notifyDataSetChanged()
-                    }
-                    error?.let {
-                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                    }
-                })
+
+    private fun getUserReactionCount(
+        reactionSession: LiveLikeReactionSession,
+        reactionPack: ReactionPack
+    ) {
+        reactionSession.getUserReactionsCount(
+            listOf(reactionPack.name),
+            LiveLikePagination.FIRST
+        ) { result, error ->
+            result?.let { list ->
+                val targetUserReactionCount = list.find {
+                    it.targetId == reactionPack.name
+                }
+                adapter.userReactionCountList = ArrayList(
+                    targetUserReactionCount?.reactions
+                        ?: emptyList<UserReactionCount>()
+                )
+                adapter.notifyDataSetChanged()
+            }
+            error?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -22,6 +22,7 @@ import com.livelike.engagementsdk.createReactionSession
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 import com.livelike.engagementsdk.reaction.LiveLikeReactionSession
+import com.livelike.engagementsdk.reaction.models.TargetUserReactionCount
 import com.livelike.engagementsdk.reaction.models.UserReactionCount
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -52,6 +53,7 @@ class ReactionPickerFragment:Fragment() {
         reactionSpaceId = "cba07b97-0c39-4b9c-827b-41fad1225ab7"// pass your own reaction space id
         targetGroupId = "135f341f-9daf-461c-8c02-239f76aaf85f" // pass the target group id
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,25 +120,6 @@ class ReactionPickerFragment:Fragment() {
         )
     }
 
-
-    private fun createReactionPopup(){
-        val reactionPopupViewBinding = ReactionsPopupViewBinding.inflate(LayoutInflater.from(context))
-        reactionPopupWindow = PopupWindow(
-            reactionPopupViewBinding.root,
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,  // Changed from MATCH_PARENT to WRAP_CONTENT
-            true
-        ).apply {
-            isOutsideTouchable = false
-            elevation = 10f  // Add elevation for a shadow effect
-            setBackgroundDrawable(ColorDrawable(Color.WHITE))  // Set a background
-        }
-        reactionPopupWindow.setBackgroundDrawable(null)
-        reactionPopupViewBinding.rcylReactionsPopup.adapter = reactionPopupAdapter
-
-    }
-
-
     private fun observerReactionFlows(){
         uiScope.launch {
             launch {
@@ -165,27 +148,33 @@ class ReactionPickerFragment:Fragment() {
 
             reactionPickerAdapter?.list = ArrayList(pack.emojis)
             session?.let { reactionSession ->
+
                 getUserReactionCount(reactionSession, pack)
+                getUserReactions(reactionSession)
 
-                reactionSession.getUserReactions(
-                    LiveLikePagination.FIRST, reactionById = currentUser?.userId,
-                    liveLikeCallback = { result, error ->
-                        result?.let {
-
-                            //pop up
-                            reactionPopupAdapter.userReactionList = ArrayList(it)
-                            reactionPopupAdapter.notifyDataSetChanged()
-
-                            //reaction picker
-                            reactionPickerAdapter?.userReactionList = ArrayList(it)
-                        }
-                        error?.let {
-                            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                        }
-                    })
             }
         }
 
+    }
+
+
+    private fun getUserReactions(reactionSession: LiveLikeReactionSession,){
+        reactionSession.getUserReactions(
+            LiveLikePagination.FIRST, reactionById = currentUser?.userId,
+            liveLikeCallback = { result, error ->
+                result?.let {
+
+                    //pop up
+                    reactionPopupAdapter.userReactionList = ArrayList(it)
+                    reactionPopupAdapter.notifyDataSetChanged()
+
+                    //reaction picker
+                    reactionPickerAdapter?.userReactionList = ArrayList(it)
+                }
+                error?.let {
+                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun getUserReactionCount(
@@ -205,15 +194,9 @@ class ReactionPickerFragment:Fragment() {
                         ?: emptyList<UserReactionCount>()
                 )
                 reactionPopupAdapter.notifyDataSetChanged()
-
-                //this is for reaction picker
-                reactionPickerAdapter?.userReactionCountList = ArrayList(
-                    targetUserReactionCount?.reactions
-                        ?: emptyList<UserReactionCount>()
-                )
-                val totalSum = reactionPickerAdapter?.userReactionCountList?.sumOf { it.count } ?: 0
-                reactionPickerAdapter?.setTotalCount(totalSum)
-                reactionPickerAdapter?.notifyDataSetChanged()
+                targetUserReactionCount?.let {
+                    setReactionPicker(it)
+                }
             }
             error?.let {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
@@ -221,6 +204,33 @@ class ReactionPickerFragment:Fragment() {
         }
     }
 
+    private fun setReactionPicker(targetUserReactionCount:TargetUserReactionCount){
+        //this is for reaction picker
+        reactionPickerAdapter?.userReactionCountList = ArrayList(
+            targetUserReactionCount.reactions
+        )
+        val totalSum = reactionPickerAdapter?.userReactionCountList?.sumOf { it.count } ?: 0
+        reactionPickerAdapter?.setTotalCount(totalSum)
+        reactionPickerAdapter?.notifyDataSetChanged()
+    }
+
+
+    private fun createReactionPopup(){
+        val reactionPopupViewBinding = ReactionsPopupViewBinding.inflate(LayoutInflater.from(context))
+        reactionPopupWindow = PopupWindow(
+            reactionPopupViewBinding.root,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,  // Changed from MATCH_PARENT to WRAP_CONTENT
+            true
+        ).apply {
+            isOutsideTouchable = false
+            elevation = 10f  // Add elevation for a shadow effect
+            setBackgroundDrawable(ColorDrawable(Color.WHITE))  // Set a background
+        }
+        reactionPopupWindow.setBackgroundDrawable(null)
+        reactionPopupViewBinding.rcylReactionsPopup.adapter = reactionPopupAdapter
+
+    }
 
     private fun openReactionPopup(view: View) {
         val location = IntArray(2)
@@ -238,6 +248,7 @@ class ReactionPickerFragment:Fragment() {
             location[1] - dpToPx(32f)
         )
     }
+
 
     private fun dpToPx(dp: Float): Int {
         val scale = requireContext().resources.displayMetrics.density

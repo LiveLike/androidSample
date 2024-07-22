@@ -65,7 +65,6 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
                                     it,
                                     Toast.LENGTH_SHORT
                                 ).show()
-                               // onPopupClose?.invoke()
                             }
                         }
                     }
@@ -87,7 +86,6 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
                             error?.let {
                                 Toast.makeText(holder.itemView.context, it, Toast.LENGTH_SHORT)
                                     .show()
-                               // onPopupClose?.invoke()
                             }
                         })
                 }

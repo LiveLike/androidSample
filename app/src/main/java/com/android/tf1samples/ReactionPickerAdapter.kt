@@ -3,14 +3,13 @@ package com.android.tf1samples
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android.tf1samples.databinding.ReactionPickerItemBinding
 import com.android.tf1samples.databinding.ReactionPickerPlaceholderBinding
 import com.bumptech.glide.Glide
 import com.livelike.engagementsdk.chat.chatreaction.Reaction
-import com.livelike.engagementsdk.reaction.LiveLikeReactionSession
-import com.livelike.ui.reactions.R
+import com.livelike.engagementsdk.reaction.models.UserReactionCount
+import com.livelike.engagementsdk.reaction.models.UserReaction
 
 
 import kotlin.reflect.KFunction1
@@ -18,14 +17,12 @@ import kotlin.reflect.KFunction1
 class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunction1<View, Unit>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(
 ) {
-    var reactionPackId: String? = null
     var list = arrayListOf<Reaction>()
     var userReactionCountList =
-        arrayListOf<com.livelike.engagementsdk.reaction.models.UserReactionCount>()
-    var userReactionList = arrayListOf<com.livelike.engagementsdk.reaction.models.UserReaction>()
-    var session: LiveLikeReactionSession? = null
-    var userId: String? = null
+        arrayListOf<UserReactionCount>()
+    var userReactionList = arrayListOf<UserReaction>()
     private var totalCount = 0
+
 
     fun setTotalCount(totalCount: Int) {
         this.totalCount = totalCount
@@ -74,7 +71,6 @@ class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunct
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ReactionPickerPlaceHolder -> {
-                //holder.pickerPlaceholderBinding.placeholderImage.setImageResource(R.drawable.ic_add_reaction)
                 holder.itemView.setOnClickListener(reactionPlaceHolderClickListener)
             }
 
@@ -88,13 +84,23 @@ class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunct
                 }
                 if (reactionPosition == userReactionCountList.size - 1) {
                     holder.itemPickerBinding.txtReactionCount.visibility = View.VISIBLE
-                    holder.itemPickerBinding.txtReactionCount.text = totalCount.toString()
+                    holder.itemPickerBinding.txtReactionCount.text = formatCount(totalCount)
                 }
             }
         }
     }
 
     override fun getItemCount(): Int = userReactionCountList.size + 1
+
+
+    //this is for larger counts
+    private fun formatCount(count: Int): String {
+        return when {
+            count >= 1_000_000 -> String.format("%.1fM", count / 1_000_000.0)
+            count >= 1_000 -> String.format("%.1fK", count / 1_000.0)
+            else -> count.toString()
+        }
+    }
 
 
 

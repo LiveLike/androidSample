@@ -1,6 +1,5 @@
 package com.android.tf1samples
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -23,6 +22,7 @@ import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 import com.livelike.engagementsdk.reaction.LiveLikeReactionSession
 import com.livelike.engagementsdk.reaction.models.TargetUserReactionCount
+import com.livelike.engagementsdk.reaction.models.UserReaction
 import com.livelike.engagementsdk.reaction.models.UserReactionCount
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -58,14 +58,13 @@ class ReactionPickerFragment:Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentReactionPickerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -107,7 +106,7 @@ class ReactionPickerFragment:Fragment() {
         }
     }
 
-
+    //reaction session created
     private fun createReactionSession() {
         session = (activity?.application as Application).sdk.createReactionSession(
             reactionSpaceId,
@@ -120,26 +119,55 @@ class ReactionPickerFragment:Fragment() {
         )
     }
 
+    //observe live updates of user reactions
     private fun observerReactionFlows(){
         uiScope.launch {
             launch {
                 session?.addUserReactionFlow?.collect { reaction ->
-                    val userReactionCount =
-                        reactionPickerAdapter?.userReactionCountList?.find { it.reactionId == reaction.reactionId }
-                    val index =
-                        reactionPickerAdapter?.userReactionCountList?.indexOfFirst { it.reactionId == reaction.reactionId }
-
+                    reactionPickerAdapter?.let { adapter ->
+                        handleUserReaction(adapter, reaction, isAdd = true)
+                    }
                 }
             }
             launch {
                 session?.removeUserReactionFlow?.collect { reaction ->
-
+                    reactionPickerAdapter?.let { adapter ->
+                        handleUserReaction(adapter, reaction, isAdd = false)
+                    }
                 }
             }
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
+     //handle user add/remove reactions
+    private fun handleUserReaction(adapter: ReactionPickerAdapter, reaction: UserReaction, isAdd: Boolean) {
+        val index = adapter.userReactionCountList.indexOfFirst { it.reactionId == reaction.reactionId }
+        val userReactionCount = if (index > -1) adapter.userReactionCountList[index] else null
+        val count = userReactionCount?.count ?: 0
+        val newCount = if (isAdd) count + 1 else count - 1
+
+        if (userReactionCount != null) {
+            adapter.userReactionCountList[index] = userReactionCount.copy(
+                selfReactedUserReactionId = if (reaction.reactedById == currentUser?.userId && isAdd) reaction.id else null,
+                count = newCount.coerceAtLeast(0)
+            )
+        } else if (isAdd) {
+            adapter.userReactionCountList.add(
+                UserReactionCount(
+                    reactionId = reaction.reactionId,
+                    count = 1,
+                    selfReactedUserReactionId = if (reaction.reactedById == currentUser?.userId) reaction.id else null
+                )
+            )
+        }
+
+        updatePickerItemCount()
+        adapter.notifyDataSetChanged()
+    }
+
+
+
     private fun setReactionPack(reactionPack: ReactionPack?) {
         reactionPack?.let{ pack->
             reactionPopupAdapter.reactionPackId = pack.name
@@ -154,11 +182,10 @@ class ReactionPickerFragment:Fragment() {
 
             }
         }
-
     }
 
 
-    private fun getUserReactions(reactionSession: LiveLikeReactionSession,){
+    private fun getUserReactions(reactionSession: LiveLikeReactionSession){
         reactionSession.getUserReactions(
             LiveLikePagination.FIRST, reactionById = currentUser?.userId,
             liveLikeCallback = { result, error ->
@@ -176,6 +203,7 @@ class ReactionPickerFragment:Fragment() {
                 }
             })
     }
+
 
     private fun getUserReactionCount(
         reactionSession: LiveLikeReactionSession,
@@ -204,11 +232,16 @@ class ReactionPickerFragment:Fragment() {
         }
     }
 
+
     private fun setReactionPicker(targetUserReactionCount:TargetUserReactionCount){
         //this is for reaction picker
         reactionPickerAdapter?.userReactionCountList = ArrayList(
             targetUserReactionCount.reactions
         )
+       updatePickerItemCount()
+    }
+
+    private fun updatePickerItemCount(){
         val totalSum = reactionPickerAdapter?.userReactionCountList?.sumOf { it.count } ?: 0
         reactionPickerAdapter?.setTotalCount(totalSum)
         reactionPickerAdapter?.notifyDataSetChanged()

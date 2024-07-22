@@ -27,13 +27,13 @@ import com.livelike.engagementsdk.reaction.models.UserReactionCount
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class ReactionPickerFragment:Fragment() {
+class ReactionPickerFragment : Fragment() {
 
     private var session: LiveLikeReactionSession? = null
     private var reactionSpaceId: String? = null
     private var targetGroupId: String? = null
     private var reactionPackList: List<ReactionPack>? = null
-    private var currentReactionPack:ReactionPack?=null
+    private var currentReactionPack: ReactionPack? = null
 
     private var reactionPickerAdapter: ReactionPickerAdapter? = null
     private lateinit var reactionPopupWindow: PopupWindow
@@ -64,7 +64,6 @@ class ReactionPickerFragment:Fragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -75,10 +74,8 @@ class ReactionPickerFragment:Fragment() {
         reactionPickerAdapter = ReactionPickerAdapter(::openReactionPopup)
         binding.rcylReactionsPicker.adapter = reactionPickerAdapter
 
-        /* create reaction session */
         createReactionSession()
 
-        /* create reaction picker popup */
         createReactionPopup()
 
         (activity?.application as Application).sdk.profile().profileStream.subscribe(this) { liveLikeUserApi ->
@@ -87,21 +84,9 @@ class ReactionPickerFragment:Fragment() {
 
             session?.let { reactionSession ->
                 reactionPopupAdapter.session = reactionSession
-                reactionSession.getReactionPacks { result, error ->
-                    result?.let { list ->
-                        reactionPackList = list
-                        reactionPackList?.let {
-                            currentReactionPack = it[0]
-                            setReactionPack(currentReactionPack)
-                        }
-
-                    }
-                    error?.let {
-                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                    }
-                }
+                fetchReactionPacks(reactionSession)
             }
-          /* observer reaction flows*/
+            /* observer reaction flows*/
             observerReactionFlows()
         }
     }
@@ -120,7 +105,7 @@ class ReactionPickerFragment:Fragment() {
     }
 
     //observe live updates of user reactions
-    private fun observerReactionFlows(){
+    private fun observerReactionFlows() {
         uiScope.launch {
             launch {
                 session?.addUserReactionFlow?.collect { reaction ->
@@ -140,9 +125,14 @@ class ReactionPickerFragment:Fragment() {
     }
 
 
-     //handle user add/remove reactions
-    private fun handleUserReaction(adapter: ReactionPickerAdapter, reaction: UserReaction, isAdd: Boolean) {
-        val index = adapter.userReactionCountList.indexOfFirst { it.reactionId == reaction.reactionId }
+    //handle user add/remove reactions
+    private fun handleUserReaction(
+        adapter: ReactionPickerAdapter,
+        reaction: UserReaction,
+        isAdd: Boolean
+    ) {
+        val index =
+            adapter.userReactionCountList.indexOfFirst { it.reactionId == reaction.reactionId }
         val userReactionCount = if (index > -1) adapter.userReactionCountList[index] else null
         val count = userReactionCount?.count ?: 0
         val newCount = if (isAdd) count + 1 else count - 1
@@ -166,10 +156,25 @@ class ReactionPickerFragment:Fragment() {
         adapter.notifyDataSetChanged()
     }
 
+    //fetch reaction packs
+    private fun fetchReactionPacks(reactionSession: LiveLikeReactionSession) {
+        reactionSession.getReactionPacks { result, error ->
+            result?.let { list ->
+                reactionPackList = list
+                reactionPackList?.let {
+                    currentReactionPack = it[0]
+                    setReactionPack(currentReactionPack)
+                }
 
+            }
+            error?.let {
+                Log.d("ReactionPicker",it)
+            }
+        }
+    }
 
     private fun setReactionPack(reactionPack: ReactionPack?) {
-        reactionPack?.let{ pack->
+        reactionPack?.let { pack ->
             reactionPopupAdapter.reactionPackId = pack.name
             reactionPopupAdapter.list = ArrayList(pack.emojis)
             reactionPopupAdapter.notifyDataSetChanged()
@@ -185,7 +190,7 @@ class ReactionPickerFragment:Fragment() {
     }
 
 
-    private fun getUserReactions(reactionSession: LiveLikeReactionSession){
+    private fun getUserReactions(reactionSession: LiveLikeReactionSession) {
         reactionSession.getUserReactions(
             LiveLikePagination.FIRST, reactionById = currentUser?.userId,
             liveLikeCallback = { result, error ->
@@ -233,24 +238,29 @@ class ReactionPickerFragment:Fragment() {
     }
 
 
-    private fun showTotalReactionsCount(targetUserReactionCount:TargetUserReactionCount){
+    private fun showTotalReactionsCount(targetUserReactionCount: TargetUserReactionCount) {
         //this is for reaction picker
         reactionPickerAdapter?.userReactionCountList = ArrayList(
             targetUserReactionCount.reactions
         )
-       updateReactionsTotalItemCount()
+        updateReactionsTotalItemCount()
     }
 
 
-    private fun updateReactionsTotalItemCount(){
+    private fun updateReactionsTotalItemCount() {
         val totalSum = reactionPickerAdapter?.userReactionCountList?.sumOf { it.count } ?: 0
         reactionPickerAdapter?.setTotalCount(totalSum)
-        reactionPickerAdapter?.notifyDataSetChanged()
+
+        val lastIndex = reactionPickerAdapter?.userReactionCountList?.size?.minus(1)
+        if (lastIndex != null && lastIndex >= 0) {
+            reactionPickerAdapter?.notifyItemChanged(lastIndex)
+        }
     }
 
 
-    private fun createReactionPopup(){
-        val reactionPopupViewBinding = ReactionsPopupViewBinding.inflate(LayoutInflater.from(context))
+    private fun createReactionPopup() {
+        val reactionPopupViewBinding =
+            ReactionsPopupViewBinding.inflate(LayoutInflater.from(context))
         reactionPopupWindow = PopupWindow(
             reactionPopupViewBinding.root,
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -265,6 +275,7 @@ class ReactionPickerFragment:Fragment() {
         reactionPopupViewBinding.rcylReactionsPopup.adapter = reactionPopupAdapter
 
     }
+
 
     private fun openReactionPopup(view: View) {
         val location = IntArray(2)

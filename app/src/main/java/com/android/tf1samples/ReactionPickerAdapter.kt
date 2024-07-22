@@ -26,7 +26,6 @@ class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunct
 
     fun setTotalCount(totalCount: Int) {
         this.totalCount = totalCount
-        notifyDataSetChanged()
     }
 
 

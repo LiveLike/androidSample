@@ -162,7 +162,7 @@ class ReactionPickerFragment:Fragment() {
             )
         }
 
-        updatePickerItemCount()
+        updateReactionsTotalItemCount()
         adapter.notifyDataSetChanged()
     }
 
@@ -223,7 +223,7 @@ class ReactionPickerFragment:Fragment() {
                 )
                 reactionPopupAdapter.notifyDataSetChanged()
                 targetUserReactionCount?.let {
-                    setReactionPicker(it)
+                    showTotalReactionsCount(it)
                 }
             }
             error?.let {
@@ -233,15 +233,16 @@ class ReactionPickerFragment:Fragment() {
     }
 
 
-    private fun setReactionPicker(targetUserReactionCount:TargetUserReactionCount){
+    private fun showTotalReactionsCount(targetUserReactionCount:TargetUserReactionCount){
         //this is for reaction picker
         reactionPickerAdapter?.userReactionCountList = ArrayList(
             targetUserReactionCount.reactions
         )
-       updatePickerItemCount()
+       updateReactionsTotalItemCount()
     }
 
-    private fun updatePickerItemCount(){
+
+    private fun updateReactionsTotalItemCount(){
         val totalSum = reactionPickerAdapter?.userReactionCountList?.sumOf { it.count } ?: 0
         reactionPickerAdapter?.setTotalCount(totalSum)
         reactionPickerAdapter?.notifyDataSetChanged()

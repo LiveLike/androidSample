@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.android.tf1samples.customWidgets.CustomPollWidget
+import com.android.tf1samples.customWidgets.CustomTextAskWidget
 import com.android.tf1samples.databinding.FragmentSecondBinding
-import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.fetchWidgetDetails
-import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
 import com.livelike.engagementsdk.widget.widgetModel.*
 

@@ -48,7 +48,7 @@ class ForthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_forthFragment_to_ReactionFragment)
+            findNavController().navigate(R.id.action_forthFragment_to_ReactionBarExampleFragment)
         }
 
         binding.widgetView.showTimer = false

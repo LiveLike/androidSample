@@ -1,4 +1,4 @@
-package com.android.tf1samples
+package com.android.tf1samples.customWidgets
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.tf1samples.QuizListAdapter
+import com.android.tf1samples.R
 import com.android.tf1samples.databinding.CustomQuizWidgetBinding
 import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.widget.viewModel.QuizViewModel
@@ -112,7 +114,7 @@ class CustomImageQuizWidget : ConstraintLayout {
 
 
     //load states
-    private fun loadQuizStateFlow(adapter:QuizListAdapter){
+    private fun loadQuizStateFlow(adapter: QuizListAdapter){
         uiScope.launch {
             (quizWidgetModel as QuizViewModel).widgetStateFlow.collect{ widgetStates->
                 when (widgetStates) {

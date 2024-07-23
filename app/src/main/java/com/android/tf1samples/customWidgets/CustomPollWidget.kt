@@ -1,4 +1,4 @@
-package com.android.tf1samples
+package com.android.tf1samples.customWidgets
 
 import android.content.Context
 import android.content.res.Resources
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.tf1samples.R
 import com.android.tf1samples.databinding.CustomPollWidgetBinding
 import com.android.tf1samples.databinding.PollTextListItemBinding
 import com.livelike.engagementsdk.OptionsItem

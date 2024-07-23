@@ -1,4 +1,4 @@
-package com.android.tf1samples
+package com.android.tf1samples.composableWrappers
 
 import android.view.View
 import android.widget.Toast
@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.android.tf1samples.customWidgets.CustomImageQuizWidget
 import com.livelike.engagementsdk.ContentSession
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.fetchWidgetDetails

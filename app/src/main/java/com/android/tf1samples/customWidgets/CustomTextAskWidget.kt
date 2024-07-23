@@ -1,4 +1,4 @@
-package com.android.tf1samples
+package com.android.tf1samples.customWidgets
 
 import android.content.Context
 import android.text.Editable
@@ -12,8 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.android.tf1samples.databinding.CustomTextAskBinding
 import com.livelike.engagementsdk.widget.widgetModel.TextAskWidgetModel
 import com.livelike.utils.LiveLikeException
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 class CustomTextAskWidget : ConstraintLayout {
     var askWidgetModel: TextAskWidgetModel? = null

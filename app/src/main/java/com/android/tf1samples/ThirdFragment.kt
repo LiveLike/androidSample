@@ -7,6 +7,7 @@
     import android.view.ViewGroup
     import android.widget.Toast
     import androidx.navigation.fragment.findNavController
+    import com.android.tf1samples.customWidgets.CustomImageQuizWidget
     import com.android.tf1samples.databinding.FragmentThirdBinding
     import com.livelike.engagementsdk.*
     import com.livelike.engagementsdk.widget.widgetModel.*

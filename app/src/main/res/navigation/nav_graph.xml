@@ -42,14 +42,13 @@
         android:label="ForthFragment"
         tools:layout="@layout/fragment_forth">
         <action
-            android:id="@+id/action_forthFragment_to_ReactionFragment"
-            app:destination="@id/ReactionFragment" />
+            android:id="@+id/action_forthFragment_to_ReactionBarExampleFragment"
+            app:destination="@id/ReactionBarExampleFragment" />
     </fragment>
     <fragment
-        android:id="@+id/ReactionFragment"
-        android:name="com.android.tf1samples.ReactionBarFragment"
-        android:label="ReactionFragment"
-        tools:layout="@layout/fragment_reaction">
+        android:id="@+id/ReactionBarExampleFragment"
+        android:name="com.android.tf1samples.ReactionBarExampleFragment"
+        android:label="ReactionBarExampleFragment">
         <action
             android:id="@+id/action_ReactionFragment_to_ReactionPickerFragment"
             app:destination="@id/ReactionPickerFragment" />

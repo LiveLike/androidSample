@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/ReactionPickerFragment"
-        android:name="com.android.tf1samples.ReactionPickerFragment"
+        android:name="com.android.tf1samples.ReactionPickerExampleFragment"
         android:label="ReactionPickerFragment"
         tools:layout="@layout/fragment_reaction_picker">
         <action

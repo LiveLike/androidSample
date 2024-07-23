@@ -1,39 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="#0D3D66">
+    android:id="@+id/rcyl_reactions_picker"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingTop="50dp"
+    tools:listitem="@layout/reaction_picker_item" />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyl_reactions_picker"
-        android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/reaction_picker_item" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-
-    <Button
-        android:id="@+id/buttonLast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:layout_gravity="center_horizontal"
-        />
-</LinearLayout>

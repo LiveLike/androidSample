@@ -245,6 +245,9 @@ class ReactionPickerView(
             elevation = 10f
             setBackgroundDrawable(ColorDrawable(Color.WHITE))
         }
+        reactionPopupWindow.setOnDismissListener {
+            reactionPickerAdapter?.closePopup()
+        }
         reactionPopupWindow.setBackgroundDrawable(null)
         reactionPopupViewBinding.rcylReactionsPopup.adapter = reactionPopupAdapter
     }
@@ -260,7 +263,7 @@ class ReactionPickerView(
             view,
             Gravity.NO_GRAVITY,
             location[0],
-            location[1] - dpToPx(32f)
+            location[1] - dpToPx(55f) //32 is the value to show st same baseline
         )
     }
 

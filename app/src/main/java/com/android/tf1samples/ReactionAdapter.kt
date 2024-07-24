@@ -35,7 +35,7 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
         Glide.with(holder.itemView).load(reaction.file).into(holder.itemBinding.imgReaction)
         val userReactionCount = userReactionCountList.find { it.reactionId == reaction.id }
         val userReaction = userReactionList.find { it.reactionId == reaction.id }
-        holder.itemBinding.txtReactionCount.text = "${userReactionCount?.count ?: 0}"
+        holder.itemBinding.txtReactionCount.text = formatCount(userReactionCount?.count ?: 0)
         if (userReaction?.reactedById == userId) {
             holder.itemBinding.reactionItemLayout.setBackgroundResource(R.drawable.reaction_background_corner_selected)
         } else {
@@ -94,4 +94,13 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
     }
 
     override fun getItemCount(): Int = list.size
+
+    //this is for larger counts
+    private fun formatCount(count: Int): String {
+        return when {
+            count >= 1_000_000 -> String.format("%.1fM", count / 1_000_000.0)
+            count >= 1_000 -> String.format("%.1fK", count / 1_000.0)
+            else -> count.toString()
+        }
+    }
 }

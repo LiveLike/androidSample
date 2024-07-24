@@ -22,6 +22,7 @@ class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunct
         arrayListOf<UserReactionCount>()
     var userReactionList = arrayListOf<UserReaction>()
     private var totalCount = 0
+    private var isPopupOpen = false
 
 
     fun setTotalCount(totalCount: Int) {
@@ -31,8 +32,13 @@ class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunct
 
     inner class ReactionPickerViewHolder(var itemPickerBinding: ReactionPickerItemBinding) : RecyclerView.ViewHolder(itemPickerBinding.root)
 
-    inner class ReactionPickerPlaceHolder(val pickerPlaceholderBinding: ReactionPickerPlaceholderBinding) :
-        RecyclerView.ViewHolder(pickerPlaceholderBinding.root)
+    inner class ReactionPickerPlaceHolder(private val pickerPlaceholderBinding: ReactionPickerPlaceholderBinding) :
+        RecyclerView.ViewHolder(pickerPlaceholderBinding.root){
+
+        fun updateState(isSelected: Boolean) {
+            pickerPlaceholderBinding.placeholderImage.isSelected = isSelected
+        }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -70,7 +76,12 @@ class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunct
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ReactionPickerPlaceHolder -> {
-                holder.itemView.setOnClickListener(reactionPlaceHolderClickListener)
+                holder.updateState(isPopupOpen)
+                holder.itemView.setOnClickListener { view ->
+                    isPopupOpen = true
+                    holder.updateState(true)
+                    reactionPlaceHolderClickListener(view)
+                }
             }
 
             is ReactionPickerViewHolder -> {
@@ -99,6 +110,11 @@ class ReactionPickerAdapter(private val reactionPlaceHolderClickListener: KFunct
             count >= 1_000 -> String.format("%.1fK", count / 1_000.0)
             else -> count.toString()
         }
+    }
+
+    fun closePopup() {
+        isPopupOpen = false
+        notifyItemChanged(0)  // Update the placeholder item
     }
 
 

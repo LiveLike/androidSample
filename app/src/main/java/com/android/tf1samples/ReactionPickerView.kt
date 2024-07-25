@@ -25,6 +25,7 @@ import com.livelike.engagementsdk.reaction.models.TargetUserReactionCount
 import com.livelike.engagementsdk.reaction.models.UserReaction
 import com.livelike.engagementsdk.reaction.models.UserReactionCount
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 @SuppressLint("ViewConstructor")
@@ -253,7 +254,7 @@ class ReactionPickerView(
     }
 
     private fun openReactionPopup(view: View) {
-        val location = IntArray(2)
+        /*val location = IntArray(2)
         view.getLocationOnScreen(location)
         if (!::reactionPopupWindow.isInitialized) {
             Log.e("ReactionPopup", "Popup window not initialized")
@@ -264,7 +265,54 @@ class ReactionPickerView(
             Gravity.NO_GRAVITY,
             location[0],
             location[1] - dpToPx(55f) //32 is the value to show st same baseline
+        )*/
+
+        ///another approach
+
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)
+        if (!::reactionPopupWindow.isInitialized) {
+            Log.e("ReactionPopup", "Popup window not initialized")
+            return
+        }
+
+        // Measure the popup window to get its height
+        reactionPopupWindow.contentView.measure(
+            View.MeasureSpec.UNSPECIFIED,
+            View.MeasureSpec.UNSPECIFIED
         )
+        val popupHeight = reactionPopupWindow.contentView.measuredHeight
+
+        reactionPopupWindow.showAtLocation(
+            view,
+            Gravity.NO_GRAVITY,
+            location[0],
+            location[1] - popupHeight // This aligns the bottom of the popup with the bottom of the button
+        )
+    }
+
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        uiScope.cancel()
+
+        // Unsubscribe from the profile stream
+        sdk.profile().profileStream.unsubscribe(this)
+        session = null
+
+
+        currentUser = null
+        reactionPackList = null
+        currentReactionPack = null
+        reactionPickerAdapter = null
+
+        reactionPopupAdapter.onPopupClose = null
+        reactionPopupAdapter.session = null
+        reactionPopupAdapter.userId = null
+
+        if (::reactionPopupWindow.isInitialized) {
+            reactionPopupWindow.dismiss()
+        }
     }
 
     private fun dpToPx(dp: Float): Int {

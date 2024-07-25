@@ -16,6 +16,7 @@ import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 import com.livelike.engagementsdk.reaction.LiveLikeReactionSession
 import com.livelike.engagementsdk.reaction.models.UserReactionCount
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 @SuppressLint("ViewConstructor")
@@ -207,5 +208,16 @@ class ReactionBarView(
                 }
             }
         }
+    }
+
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
+        uiScope.cancel()
+        sdk.profile().profileStream.unsubscribe(this)
+        session = null
+        currentUser = null
+        reactionPackList = null
     }
 }

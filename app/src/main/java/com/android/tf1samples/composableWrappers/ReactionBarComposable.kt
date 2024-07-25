@@ -21,17 +21,7 @@ fun ReactionBarComposable(
                 sdk = sdk,
                 targetGroupId = targetGroupId,
                 reactionSpaceId = reactionSpaceId
-            ).apply {
-                // You can set up any additional properties or listeners here if needed
-            }
-        },
-        update = { view ->
-            // This block is called whenever the composable is recomposed
-            // You can update the view here if any of the parameters change
-            view.apply {
-                // For example, if you need to update the targetGroupId or reactionSpaceId:
-                // updateIds(targetGroupId, reactionSpaceId)
-            }
+            )
         }
     )
 

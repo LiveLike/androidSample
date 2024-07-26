@@ -24,8 +24,8 @@ import kotlinx.coroutines.launch
 class ReactionBarView(
     context: Context,
     private val sdk: EngagementSDK,
-    private val targetGroupId: String,
-    private val reactionSpaceId: String
+    private val targetGroupId: String?=null, ////either targetGroupId or reactionSpaceId should be passed
+    private val reactionSpaceId: String?=null
 ) : ConstraintLayout(context) {
 
 
@@ -51,6 +51,10 @@ class ReactionBarView(
 
 
      private fun createReactionSession(){
+         if (targetGroupId == null && reactionSpaceId == null) {
+             Log.e("ReactionBar", "Cannot create reaction session: both targetGroupId and reactionSpaceId are null")
+             return
+         }
          session =
            sdk.createReactionSession(
                  reactionSpaceId,

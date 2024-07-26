@@ -32,8 +32,8 @@ import kotlinx.coroutines.launch
 class ReactionPickerView(
     context: Context,
     private val sdk: EngagementSDK,
-    private val targetGroupId: String,
-    private val reactionSpaceId: String
+    private val targetGroupId: String?=null, //either targetGroupId or reactionSpaceId should be passed
+    private val reactionSpaceId: String?=null
 ): ConstraintLayout(context)  {
 
     private lateinit var binding: FragmentReactionPickerBinding
@@ -81,6 +81,11 @@ class ReactionPickerView(
 
 
     private fun createReactionSession(){
+        if (targetGroupId == null && reactionSpaceId == null) {
+            Log.e("ReactionBar", "Cannot create reaction session: both targetGroupId and reactionSpaceId are null")
+            return
+        }
+
         session =
             sdk.createReactionSession(
                 reactionSpaceId,
@@ -174,6 +179,7 @@ class ReactionPickerView(
         }
     }
 
+    /*fetches user reaction list*/
     private fun getUserReactions(reactionSession: LiveLikeReactionSession) {
         reactionSession.getUserReactions(
             LiveLikePagination.FIRST, reactionById = currentUser?.userId,
@@ -190,6 +196,7 @@ class ReactionPickerView(
             })
     }
 
+    /*fetches reaction count for the user reaction list*/
     private fun getUserReactionCount(
         reactionSession: LiveLikeReactionSession,
         reactionPack: ReactionPack
@@ -207,7 +214,7 @@ class ReactionPickerView(
                 )
                 reactionPopupAdapter.notifyDataSetChanged()
                 targetUserReactionCount?.let {
-                    setUserReactionsCountList(it)
+                    updateReactionCountList(it)
 
                     //updates the count in last item
                     val lastIndex = reactionPickerAdapter?.userReactionCountList?.size?.minus(1)
@@ -222,19 +229,22 @@ class ReactionPickerView(
         }
     }
 
-    private fun setUserReactionsCountList(targetUserReactionCount: TargetUserReactionCount) {
+    /*updates reaction picker adapter list*/
+    private fun updateReactionCountList(targetUserReactionCount: TargetUserReactionCount) {
         reactionPickerAdapter?.userReactionCountList = ArrayList(
             targetUserReactionCount.reactions
         )
         setReactionsTotalItemCount()
     }
 
-
+    /*gets the total user reaction count and set it to adapter*/
     private fun setReactionsTotalItemCount() {
         val totalSum = reactionPickerAdapter?.userReactionCountList?.sumOf { it.count } ?: 0
         reactionPickerAdapter?.setTotalCount(totalSum)
     }
 
+
+    /*creates reaction popup view*/
     private fun createReactionPopup() {
         val reactionPopupViewBinding = ReactionsPopupViewBinding.inflate(LayoutInflater.from(context))
         reactionPopupWindow = PopupWindow(
@@ -255,6 +265,7 @@ class ReactionPickerView(
     }
 
 
+       /*opens reaction popup view*/
     private fun openReactionPopup(view: View) {
         val location = IntArray(2)
         view.getLocationOnScreen(location)

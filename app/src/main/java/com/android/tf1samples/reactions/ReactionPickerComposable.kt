@@ -11,8 +11,8 @@ import com.livelike.engagementsdk.EngagementSDK
 @Composable
 fun ReactionPickerComposable(
     sdk: EngagementSDK, // pass the sdk instance
-    targetGroupId: String,
-    reactionSpaceId: String,
+    targetGroupId: String?=null, //either targetGroupId or reactionSpaceId should be passed
+    reactionSpaceId: String?=null,
     modifier: Modifier = Modifier
 ){
     AndroidView(

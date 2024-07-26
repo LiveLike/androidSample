@@ -1,9 +1,8 @@
-package com.android.tf1samples.composableWrappers
+package com.android.tf1samples.reactions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.android.tf1samples.ReactionBarView
 import com.livelike.engagementsdk.EngagementSDK
 
 @Composable

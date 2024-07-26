@@ -1,14 +1,16 @@
-package com.android.tf1samples
+package com.android.tf1samples.reactions
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.android.tf1samples.R
 import com.android.tf1samples.databinding.ReactionPackChildBinding
 import com.bumptech.glide.Glide
 import com.livelike.engagementsdk.chat.chatreaction.Reaction
 import com.livelike.engagementsdk.reaction.LiveLikeReactionSession
+import java.util.Locale
 
 
 class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>() {
@@ -51,11 +53,6 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
                         ) { result, error ->
                             result?.let {
                                 userReactionList.removeAll { it.id == userReaction.id }
-                                Toast.makeText(
-                                    holder.itemView.context,
-                                    "User UnReacted Success",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                                 notifyDataSetChanged()
                                 onPopupClose?.invoke()
                             }
@@ -75,11 +72,6 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
                         liveLikeCallback = { result, error ->
                             result?.let {
                                 userReactionList.add(it)
-                                Toast.makeText(
-                                    holder.itemView.context,
-                                    "User Reacted Success",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                                 notifyDataSetChanged()
                                 onPopupClose?.invoke()
                             }
@@ -98,8 +90,8 @@ class ReactionAdapter : RecyclerView.Adapter<ReactionAdapter.ReactionViewHolder>
     //this is for larger counts
     private fun formatCount(count: Int): String {
         return when {
-            count >= 1_000_000 -> String.format("%.1fM", count / 1_000_000.0)
-            count >= 1_000 -> String.format("%.1fK", count / 1_000.0)
+            count >= 1_000_000 -> String.format(Locale.getDefault(), "%.1fM", count / 1_000_000.0)
+            count >= 1_000 ->  String.format(Locale.getDefault(), "%.1fK", count / 1_000.0)
             else -> count.toString()
         }
     }

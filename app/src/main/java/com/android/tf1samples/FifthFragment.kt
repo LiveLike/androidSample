@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.android.tf1samples.composableWrappers.CustomImageQuiz
+import com.android.tf1samples.customWidgets.CustomImageQuiz
 import com.livelike.engagementsdk.ContentSession
 
 class FifthFragment : Fragment() {

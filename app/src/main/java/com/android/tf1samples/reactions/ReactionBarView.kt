@@ -1,4 +1,4 @@
-package com.android.tf1samples
+package com.android.tf1samples.reactions
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,6 +14,7 @@ import com.livelike.engagementsdk.createReactionSession
 import com.livelike.engagementsdk.publicapis.ErrorDelegate
 import com.livelike.engagementsdk.publicapis.LiveLikeUserApi
 import com.livelike.engagementsdk.reaction.LiveLikeReactionSession
+import com.livelike.engagementsdk.reaction.models.UserReaction
 import com.livelike.engagementsdk.reaction.models.UserReactionCount
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -209,6 +210,33 @@ class ReactionBarView(
             }
         }
     }
+
+
+ /*   private fun handleReaction(reaction: UserReaction, countChange: Int) { //countChange to determine whether to increment or decrement the count.
+        val index = adapter.userReactionCountList.indexOfFirst { it.reactionId == reaction.reactionId }
+        val userReactionCount = if (index > -1) adapter.userReactionCountList[index] else null
+
+        if (userReactionCount != null) {
+            val newCount = maxOf(0, (userReactionCount.count ?: 0) + countChange)
+            val newSelfReactedId = if (reaction.reactedById == currentUser?.userId)
+                (if (countChange > 0) reaction.id else null) else userReactionCount.selfReactedUserReactionId
+
+            adapter.userReactionCountList[index] = userReactionCount.copy(
+                count = newCount,
+                selfReactedUserReactionId = newSelfReactedId
+            )
+        } else if (countChange > 0) {
+            adapter.userReactionCountList.add(
+                UserReactionCount(
+                    reactionId = reaction.reactionId,
+                    count = 1,
+                    selfReactedUserReactionId = if (reaction.reactedById == currentUser?.userId) reaction.id else null
+                )
+            )
+        }
+
+        adapter.notifyDataSetChanged()
+    }*/
 
 
     override fun onDetachedFromWindow() {

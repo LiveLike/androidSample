@@ -1,10 +1,11 @@
-package com.android.tf1samples.composableWrappers
+package com.android.tf1samples.reactions
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 
-import com.android.tf1samples.ReactionPickerView
 import com.livelike.engagementsdk.EngagementSDK
 
 @Composable
@@ -15,7 +16,7 @@ fun ReactionPickerComposable(
     modifier: Modifier = Modifier
 ){
     AndroidView(
-        modifier = modifier,
+        modifier = modifier.padding(top = 50.dp),
         factory = { ctx ->
             ReactionPickerView(
                 context = ctx,

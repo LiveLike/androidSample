@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.android.tf1samples.composableWrappers.ReactionPickerComposable
+import com.android.tf1samples.reactions.ReactionPickerComposable
 
 class ReactionPickerExampleFragment: Fragment() {
     override fun onCreateView(

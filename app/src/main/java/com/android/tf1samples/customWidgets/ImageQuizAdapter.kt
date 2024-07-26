@@ -1,10 +1,11 @@
-package com.android.tf1samples
+package com.android.tf1samples.customWidgets
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.android.tf1samples.R
 import com.android.tf1samples.databinding.QuizListItemBinding
 import com.bumptech.glide.Glide
 import com.livelike.engagementsdk.OptionsItem
@@ -75,13 +76,15 @@ class QuizListAdapter(
         if (selectedIndex == position) {
             holder.itemBinding.imageText.setTextColor(
                 ContextCompat.getColor(
-                holder.itemView.context,R.color.white))
+                holder.itemView.context, R.color.white
+                ))
             holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_selected_background)
 
         } else {
             holder.itemBinding.imageText.setTextColor(
                 ContextCompat.getColor(
-                holder.itemView.context,R.color.black))
+                holder.itemView.context, R.color.black
+                ))
             holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_default_background)
 
         }
@@ -105,9 +108,13 @@ class QuizListAdapter(
             }
 
             val progressDrawable = if (isCorrect) {
-                ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_correct_background)
+                ContextCompat.getDrawable(holder.itemView.context,
+                    R.drawable.progress_correct_background
+                )
             } else {
-                ContextCompat.getDrawable(holder.itemView.context, R.drawable.progress_wrong_background)
+                ContextCompat.getDrawable(holder.itemView.context,
+                    R.drawable.progress_wrong_background
+                )
             }
 
             holder.itemBinding.quizChildLayout.setBackgroundResource(backgroundRes)
@@ -133,7 +140,8 @@ class QuizListAdapter(
             //change background for selected
             holder.itemBinding.imageText.setTextColor(
                 ContextCompat.getColor(
-                holder.itemView.context,R.color.white))
+                holder.itemView.context, R.color.white
+                ))
             holder.itemBinding.quizChildLayout.setBackgroundResource(R.drawable.quiz_answer_selected_background)
 
             quizListener?.onSelectOption(item.id)

@@ -1,4 +1,4 @@
-package com.android.tf1samples
+package com.android.tf1samples.reactions
 
 import android.view.LayoutInflater
 import android.view.View

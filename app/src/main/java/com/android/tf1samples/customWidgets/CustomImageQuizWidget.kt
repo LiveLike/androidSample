@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.tf1samples.QuizListAdapter
 import com.android.tf1samples.R
 import com.android.tf1samples.databinding.CustomQuizWidgetBinding
 import com.livelike.engagementsdk.LiveLikeWidget

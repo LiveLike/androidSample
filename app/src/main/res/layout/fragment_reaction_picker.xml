@@ -9,6 +9,6 @@
     android:orientation="horizontal"
     android:clickable="true"
     android:focusable="true"
-    android:paddingTop="50dp"
+
     tools:listitem="@layout/reaction_picker_item" />
 

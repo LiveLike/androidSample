@@ -1,4 +1,4 @@
-package com.android.tf1samples
+package com.android.tf1samples.reactions
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -120,7 +120,7 @@ class ReactionPickerView(
         reaction: UserReaction,
         isAdd: Boolean
     ) {
-        val index = adapter.userReactionCountList.indexOfFirst { it.reactionId == reaction.reactionId }
+       val index = adapter.userReactionCountList.indexOfFirst { it.reactionId == reaction.reactionId }
         val userReactionCount = if (index > -1) adapter.userReactionCountList[index] else null
         val count = userReactionCount?.count ?: 0
         val newCount = if (isAdd) count + 1 else count - 1
@@ -140,7 +140,7 @@ class ReactionPickerView(
             )
         }
 
-        updateReactionsTotalItemCount()
+        setReactionsTotalItemCount()
         adapter.notifyDataSetChanged()
     }
 
@@ -207,7 +207,13 @@ class ReactionPickerView(
                 )
                 reactionPopupAdapter.notifyDataSetChanged()
                 targetUserReactionCount?.let {
-                    showTotalReactionsCount(it)
+                    setUserReactionsCountList(it)
+
+                    //updates the count in last item
+                    val lastIndex = reactionPickerAdapter?.userReactionCountList?.size?.minus(1)
+                    if (lastIndex != null && lastIndex >= 0) {
+                        reactionPickerAdapter?.notifyItemChanged(lastIndex)
+                    }
                 }
             }
             error?.let {
@@ -216,22 +222,17 @@ class ReactionPickerView(
         }
     }
 
-    private fun showTotalReactionsCount(targetUserReactionCount: TargetUserReactionCount) {
+    private fun setUserReactionsCountList(targetUserReactionCount: TargetUserReactionCount) {
         reactionPickerAdapter?.userReactionCountList = ArrayList(
             targetUserReactionCount.reactions
         )
-        updateReactionsTotalItemCount()
+        setReactionsTotalItemCount()
     }
 
 
-    private fun updateReactionsTotalItemCount() {
+    private fun setReactionsTotalItemCount() {
         val totalSum = reactionPickerAdapter?.userReactionCountList?.sumOf { it.count } ?: 0
         reactionPickerAdapter?.setTotalCount(totalSum)
-
-        val lastIndex = reactionPickerAdapter?.userReactionCountList?.size?.minus(1)
-        if (lastIndex != null && lastIndex >= 0) {
-            reactionPickerAdapter?.notifyItemChanged(lastIndex)
-        }
     }
 
     private fun createReactionPopup() {
@@ -253,22 +254,8 @@ class ReactionPickerView(
         reactionPopupViewBinding.rcylReactionsPopup.adapter = reactionPopupAdapter
     }
 
+
     private fun openReactionPopup(view: View) {
-        /*val location = IntArray(2)
-        view.getLocationOnScreen(location)
-        if (!::reactionPopupWindow.isInitialized) {
-            Log.e("ReactionPopup", "Popup window not initialized")
-            return
-        }
-        reactionPopupWindow.showAtLocation(
-            view,
-            Gravity.NO_GRAVITY,
-            location[0],
-            location[1] - dpToPx(55f) //32 is the value to show st same baseline
-        )*/
-
-        ///another approach
-
         val location = IntArray(2)
         view.getLocationOnScreen(location)
         if (!::reactionPopupWindow.isInitialized) {
@@ -276,10 +263,9 @@ class ReactionPickerView(
             return
         }
 
-        // Measure the popup window to get its height
         reactionPopupWindow.contentView.measure(
-            View.MeasureSpec.UNSPECIFIED,
-            View.MeasureSpec.UNSPECIFIED
+            MeasureSpec.UNSPECIFIED,
+            MeasureSpec.UNSPECIFIED
         )
         val popupHeight = reactionPopupWindow.contentView.measuredHeight
 
@@ -299,8 +285,6 @@ class ReactionPickerView(
         // Unsubscribe from the profile stream
         sdk.profile().profileStream.unsubscribe(this)
         session = null
-
-
         currentUser = null
         reactionPackList = null
         currentReactionPack = null
@@ -313,11 +297,6 @@ class ReactionPickerView(
         if (::reactionPopupWindow.isInitialized) {
             reactionPopupWindow.dismiss()
         }
-    }
-
-    private fun dpToPx(dp: Float): Int {
-        val scale = context.resources.displayMetrics.density
-        return (dp * scale + 0.5f).toInt()
     }
 
 }

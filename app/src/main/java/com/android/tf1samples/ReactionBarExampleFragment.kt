@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.android.tf1samples.composableWrappers.ReactionBarComposable
+import com.android.tf1samples.reactions.ReactionBarComposable
 import com.android.tf1samples.databinding.ReactionBarExampleFragmentBinding
 
 class ReactionBarExampleFragment : Fragment() {

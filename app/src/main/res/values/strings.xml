@@ -14,4 +14,9 @@
     <string name="quiz_expired">QUIZ EXPIRED</string>
 
     <string name="quiz_tag">QUIZ</string>
+    <string name="ama_tag">ASK A QUESTION</string>
+    <string name="ama_edit_box_hint">Write your message</string>
+    <string name="ama_edit_box_count">250</string>
+    <string name="ama_expired">CLOSED</string>
+    <string name="ama_submitted">SUBMITTED</string>
 </resources>

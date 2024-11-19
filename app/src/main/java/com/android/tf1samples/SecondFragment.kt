@@ -121,8 +121,8 @@ class SecondFragment : Fragment() {
 
         }
 
-        loadTextPoll()
-//        loadTextAskWidget()
+        //loadTextPoll()
+        loadTextAskWidget()
     }
 
     private fun loadTextPoll() {
@@ -141,7 +141,7 @@ class SecondFragment : Fragment() {
     }
 
     fun loadTextAskWidget() {
-        (activity?.application as Application).sdk.fetchWidgetDetails("151359d2-de10-4e14-aae1-85edc32f50bc",
+        (activity?.application as Application).sdk.fetchWidgetDetails("ed5a8546-d747-495e-9a6d-092a2e597a5c",
             "text-ask"){result, error ->
             result?.let {
                 binding.widgetView.displayWidget(

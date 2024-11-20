@@ -101,7 +101,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/userInputEdt"
                     android:layout_marginEnd="@dimen/ama_count_text_margin_end"
                     android:layout_marginBottom="@dimen/ama_count_text_margin_bottom"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/ama_count_text_size"
                     android:visibility="visible"
                     android:textColor="@color/livelike_ama_edit_text_hint_color"
                     android:text="@string/ama_edit_box_count"/>
@@ -120,8 +120,8 @@
                         android:id="@+id/sendBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="33dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
+                        android:paddingLeft="@dimen/ama_send_btn_padding_left"
+                        android:paddingRight="@dimen/ama_send_btn_padding_right"
                         android:background="@drawable/submit_btn_background"
                         android:enabled="false"
                         android:letterSpacing="0.08"
@@ -156,6 +156,50 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sponsorContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ama_body_background"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/widgetContainer">
+
+        <TextView
+            android:id="@+id/sponsor_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/tnt_digital_regular"
+            android:text="@string/sponsored_by"
+            android:textColor="@color/livelike_sponsor_text_color"
+            android:textSize="@dimen/ama_sponsor_text_size"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sponsor_iv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/sponsor_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ama_sponsor_image_height"
+            android:contentDescription="@string/ama_content"
+            android:layout_marginLeft="@dimen/ama_sponsor_image_margin_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sponsor_label"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

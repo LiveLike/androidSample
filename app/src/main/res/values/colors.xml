@@ -27,4 +27,5 @@
     <color name="livelike_ama_edit_box_active_text_color">#14232D</color>
     <color name="livelike_ama_edit_box_inactive_text_color">#5B656C</color>
     <color name="livelike_ama_confirmation_text_color">#14232D</color>
+    <color name="livelike_sponsor_text_color">#14232D</color>
 </resources>

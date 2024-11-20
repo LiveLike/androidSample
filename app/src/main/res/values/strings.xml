@@ -19,4 +19,6 @@
     <string name="ama_edit_box_count">250</string>
     <string name="ama_expired">CLOSED</string>
     <string name="ama_submitted">SUBMITTED</string>
+    <string name="sponsored_by">Sponsored By</string>
+    <string name="ama_content">Image</string>
 </resources>

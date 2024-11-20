@@ -17,8 +17,14 @@
     <dimen name="ama_input_box_padding_bottom">10dp</dimen>
     <dimen name="ama_count_text_margin_end">12dp</dimen>
     <dimen name="ama_count_text_margin_bottom">10dp</dimen>
+    <dimen name="ama_count_text_size">12sp</dimen>
     <dimen name="ama_confirmation_message_height">33dp</dimen>
     <dimen name="ama_confirmation_message_margin_left">12dp</dimen>
+    <dimen name="ama_send_btn_padding_left">20dp</dimen>
+    <dimen name="ama_send_btn_padding_right">20dp</dimen>
 
     <dimen name="ama_confirmation_message_text_size">12sp</dimen>
+    <dimen name="ama_sponsor_text_size">12sp</dimen>
+    <dimen name="ama_sponsor_image_height">20dp</dimen>
+    <dimen name="ama_sponsor_image_margin_left">8dp</dimen>
 </resources>

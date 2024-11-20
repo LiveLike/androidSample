@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.fragment.findNavController
+import com.android.tf1samples.customWidgets.CustomImageQuiz
 import com.android.tf1samples.customWidgets.CustomPollWidget
+import com.android.tf1samples.customWidgets.CustomTextAskComposable
 import com.android.tf1samples.customWidgets.CustomTextAskWidget
 import com.android.tf1samples.databinding.FragmentSecondBinding
+import com.livelike.engagementsdk.ContentSession
 import com.livelike.engagementsdk.fetchWidgetDetails
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
 import com.livelike.engagementsdk.widget.widgetModel.*
@@ -19,23 +23,40 @@ import com.livelike.engagementsdk.widget.widgetModel.*
  */
 class SecondFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    //private var _binding: FragmentSecondBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+//    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
-        return binding.root
+       /* _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        return binding.root*/
+
+        val application = requireActivity().application as Application
+        val contentSession = application.sdk.createContentSession(
+            programId = "5f0f0a74-3798-47ed-9246-93e48230857b", // pass on your program Id
+            connectToDefaultChatRoom = false
+        ) as ContentSession
+
+        return ComposeView(requireContext()).apply {
+            setContent {
+                CustomTextAskComposable(
+                    sdk = application.sdk,
+                    contentSession = contentSession,
+                    widgetId = "6dedbbe1-4d91-423b-80d3-591b214223a9", //pass widget Id
+                    widgetKind = "text-ask" //pass widget kind
+                )
+            }
+        }
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
@@ -141,7 +162,7 @@ class SecondFragment : Fragment() {
     }
 
     fun loadTextAskWidget() {
-        (activity?.application as Application).sdk.fetchWidgetDetails("ed5a8546-d747-495e-9a6d-092a2e597a5c",
+        (activity?.application as Application).sdk.fetchWidgetDetails("6dedbbe1-4d91-423b-80d3-591b214223a9",
             "text-ask"){result, error ->
             result?.let {
                 binding.widgetView.displayWidget(
@@ -157,5 +178,5 @@ class SecondFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
+    }*/
 }

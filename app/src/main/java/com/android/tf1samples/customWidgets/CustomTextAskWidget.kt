@@ -11,10 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.android.tf1samples.R
-import com.android.tf1samples.databinding.CustomTextAskBinding
 import com.android.tf1samples.databinding.WidgetAskMeAnythingBinding
 import com.bumptech.glide.Glide
 import com.livelike.engagementsdk.LiveLikeWidget
@@ -162,6 +160,7 @@ class CustomTextAskWidget : ConstraintLayout {
         )
     }
 
+    //sponsor ui
     private fun wouldInflateSponsorUi(widgetData:LiveLikeWidget) {
         widgetData.sponsors?.let {
             if (it.isNotEmpty()) {

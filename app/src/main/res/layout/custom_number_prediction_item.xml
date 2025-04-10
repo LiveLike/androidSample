@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="8dp">  <!-- Added margin at the bottom of each item -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f0f0f0"
+        android:background="@drawable/rounded_item_background"
         android:padding="8dp">
 
         <ImageView
@@ -16,8 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="10dp"
-           />
+            android:layout_marginEnd="10dp" />
 
         <TextView
             android:id="@+id/player_name"
@@ -46,8 +46,5 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E0E0E0" />
+    <!-- Removed the divider view since we're using margins for separation -->
 </LinearLayout>

@@ -1,22 +1,18 @@
 package com.android.tf1samples
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.android.tf1samples.customWidgets.CustomImageQuizWidget
 import com.android.tf1samples.customWidgets.CustomNumberPredictionWidget
 import com.android.tf1samples.databinding.FragmentSixBinding
-import com.android.tf1samples.databinding.FragmentThirdBinding
-import com.google.gson.Gson
 import com.livelike.engagementsdk.ContentSession
 import com.livelike.engagementsdk.fetchWidgetDetails
+import com.livelike.engagementsdk.widget.widgetModel.NumberPredictionFollowUpWidgetModel
 import com.livelike.engagementsdk.widget.widgetModel.NumberPredictionWidgetModel
-import com.livelike.engagementsdk.widget.widgetModel.QuizWidgetModel
+
 
 class SixthFragment: Fragment()  {
 
@@ -43,7 +39,7 @@ class SixthFragment: Fragment()  {
 
         val application = activity?.application as Application
         contentSession = application.sdk.createContentSession(programId = "5f0f0a74-3798-47ed-9246-93e48230857b", connectToDefaultChatRoom = false) as ContentSession //create content session with programId
-        loadNumberImagePrediction(widgetId = "8dd6ee64-0ca8-427f-9117-95dab6b53ecc", widgetKind = "image-number-prediction")
+        loadNumberImagePrediction(widgetId = "9ec14c86-54bf-496e-87dd-d8842d6faa10", widgetKind = "image-number-prediction")
 
     }
 
@@ -54,9 +50,14 @@ class SixthFragment: Fragment()  {
             result?.let {
                 val viewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as NumberPredictionWidgetModel
                 val isFollowUp = result.followUps?.getOrNull(0)?.status == "published"
+
                 val predictionView = CustomNumberPredictionWidget(requireActivity()).apply {
                     this.numberPredictionWidgetModel = viewModel
                     this.isFollowUp = isFollowUp // Pass the isFollowUp to check ifFollowUp is published
+                    if(isFollowUp) {
+                        val followUpWidgetViewModel = contentSession.getWidgetModelFromLiveLikeWidget(it) as NumberPredictionFollowUpWidgetModel
+                        this.followUpWidgetViewModel = followUpWidgetViewModel
+                    }
                 }
                 binding.rootView.addView(predictionView)
 

@@ -1,6 +1,6 @@
 package com.android.tf1samples.customWidgets
 
-import android.content.res.ColorStateList
+
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android.tf1samples.R
 import com.android.tf1samples.databinding.CustomNumberPredictionItemBinding
@@ -56,9 +55,6 @@ class PredictionListAdapter(
 
     override fun onBindViewHolder(holder: PredictionListItemViewHolder, position: Int) {
         val item = list[position]
-        item.description?.let { Log.d("redddd", it) }
-        Log.d("redddd", item.number.toString())
-
         Glide.with(holder.itemView.context)
             .load(item.imageUrl)
             .into(
@@ -68,7 +64,7 @@ class PredictionListAdapter(
         if (item.number != null) {
             holder.itemBinding.playerScore.setText(item.number.toString())
             // Store initial value in predictionMap
-            predictionMap[item.id ?: ""] = item.number ?: 0
+            predictionMap[item.id] = item.number ?: 0
         } else {
             holder.itemBinding.playerScore.hint = "-"
         }
@@ -83,22 +79,15 @@ class PredictionListAdapter(
 
             if (isCorrect) {
                 // Correct prediction - green highlight
-                holder.itemBinding.playerScore.setTextColor(Color.GREEN)
-                holder.itemBinding.playerScore.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#E0F7E0")) // Light green background
-                // Set green border using background drawable
+                holder.itemBinding.playerScore.setTextColor(Color.parseColor("#46B946"))
                 holder.itemBinding.playerScore.setBackgroundResource(R.drawable.edittext_correct_border)
             } else {
                 // Incorrect prediction - red highlight
-                holder.itemBinding.playerScore.setTextColor(Color.RED)
-                holder.itemBinding.playerScore.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFDEDE")) // Light red background
-                // Set red border using background drawable
+                holder.itemBinding.playerScore.setTextColor(Color.parseColor("#F44336"))
                 holder.itemBinding.playerScore.setBackgroundResource(R.drawable.edittext_incorrect_border)
             }
         } else {
-            // Reset to default styling when not in follow-up mode
-            holder.itemBinding.playerScore.setTextColor(Color.BLACK) // Default text color
-            holder.itemBinding.playerScore.backgroundTintList = null // Default background
-            // Reset to default border
+            holder.itemBinding.playerScore.setTextColor(Color.BLACK) // Default text color // Default background
             holder.itemBinding.playerScore.setBackgroundResource(R.drawable.edittext_default_border)
         }
 
@@ -134,12 +123,9 @@ class PredictionListAdapter(
     }
 
     fun setInteractedData(interactedList: List<NumberPredictionVotes>) {
-        // Iterate through each item in the interactedList
         for (interactedItem in interactedList) {
             // Find matching item in our list by ID
             val matchingItem = list.find { it.id == interactedItem.optionId }
-
-            // If we found a match, update its number and the prediction map
             matchingItem?.let { item ->
                 item.number = interactedItem.number
                 predictionMap[item.id ?: ""] = interactedItem.number

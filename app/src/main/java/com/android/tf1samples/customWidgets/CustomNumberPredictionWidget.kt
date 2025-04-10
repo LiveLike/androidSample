@@ -54,6 +54,7 @@ class CustomNumberPredictionWidget: ConstraintLayout  {
             disableInteractions()
             widgetData = followUpWidgetViewModel?.widgetData
         }else {
+
             enableInteractions()
         }
 
@@ -65,7 +66,9 @@ class CustomNumberPredictionWidget: ConstraintLayout  {
                     )
                 binding.rcylPredictionList.adapter = adapter
                 binding.txt.text = liveLikeWidget.question
-                setOnClickListeners()
+                if(!isFollowUp) {
+                    setOnClickListeners()
+                }
                 getInteractionHistory(adapter!!)
 
                 if (adapter != null){
@@ -91,18 +94,39 @@ class CustomNumberPredictionWidget: ConstraintLayout  {
 
     //get user interacted data from load history api
     private fun getInteractionHistory(adapter: PredictionListAdapter) {
-            numberPredictionWidgetModel?.loadInteractionHistory { result, error ->
-                result?.let{
-                    if(it.isNotEmpty()){
+        if(isFollowUp){
+            followUpWidgetViewModel?.loadInteractionHistory { result, error ->
+                result?.let {
+                    if (it.isNotEmpty()) {
                         val interaction = it[0]
                         disableInteractions()
-                        Log.d("CustomPredictionWidget", "CustomNoPredictionWidget.historyonResponse>>${interaction.votes}")
+                        Log.d(
+                            "CustomPredictionWidget",
+                            "CustomNoPredictionWidget.historyonResponse>>${interaction.votes}"
+                        )
                         interaction.votes?.let { scores ->
                             adapter.setInteractedData(scores)
                         }
                     }
                 }
             }
+        }else {
+            numberPredictionWidgetModel?.loadInteractionHistory { result, error ->
+                result?.let {
+                    if (it.isNotEmpty()) {
+                        val interaction = it[0]
+                        disableInteractions()
+                        Log.d(
+                            "CustomPredictionWidget",
+                            "CustomNoPredictionWidget.historyonResponse>>${interaction.votes}"
+                        )
+                        interaction.votes?.let { scores ->
+                            adapter.setInteractedData(scores)
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

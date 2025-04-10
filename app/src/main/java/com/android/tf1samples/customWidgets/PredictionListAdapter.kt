@@ -1,6 +1,5 @@
 package com.android.tf1samples.customWidgets
 
-
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
@@ -71,6 +70,19 @@ class PredictionListAdapter(
 
         // Set the EditText's enabled state
         holder.itemBinding.playerScore.isEnabled = editTextsEnabled
+
+        // Handle correctScore EditText visibility and content
+        if (isFollowUp && item.correctNumber != null) {
+            // Show the correctScore EditText and set its value
+            holder.itemBinding.correctScore.visibility = View.VISIBLE
+            holder.itemBinding.correctScore.setText(item.correctNumber.toString())
+            holder.itemBinding.correctScore.setTextColor(Color.parseColor("#46B946"))
+            holder.itemBinding.correctScore.setBackgroundResource(R.drawable.edittext_correct_border)
+            holder.itemBinding.correctScore.isEnabled = false  // Make it non-editable
+        } else {
+            // Hide the correctScore EditText when not in follow-up mode
+            holder.itemBinding.correctScore.visibility = View.GONE
+        }
 
         // Apply highlighting for follow-up if needed
         if (isFollowUp && item.correctNumber != null && item.number != null) {

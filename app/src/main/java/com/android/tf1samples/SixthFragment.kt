@@ -39,7 +39,7 @@ class SixthFragment: Fragment()  {
 
         val application = activity?.application as Application
         contentSession = application.sdk.createContentSession(programId = "5f0f0a74-3798-47ed-9246-93e48230857b", connectToDefaultChatRoom = false) as ContentSession //create content session with programId
-        loadNumberImagePrediction(widgetId = "9ec14c86-54bf-496e-87dd-d8842d6faa10", widgetKind = "image-number-prediction")
+        loadNumberImagePrediction(widgetId = "e95f5f8f-d98a-403d-9a59-519ca8ab7f28", widgetKind = "image-number-prediction")
 
     }
 

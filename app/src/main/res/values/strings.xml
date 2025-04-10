@@ -21,4 +21,5 @@
     <string name="ama_submitted">SUBMITTED</string>
     <string name="sponsored_by">Sponsored By</string>
     <string name="ama_content">Image</string>
+    <string name="prediction_tag">PREDICTION</string>
 </resources>

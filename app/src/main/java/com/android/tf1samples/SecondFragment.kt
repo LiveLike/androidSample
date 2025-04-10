@@ -23,40 +23,40 @@ import com.livelike.engagementsdk.widget.widgetModel.*
  */
 class SecondFragment : Fragment() {
 
-    //private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentSecondBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-//    private val binding get() = _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-       /* _binding = FragmentSecondBinding.inflate(inflater, container, false)
-        return binding.root*/
+        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        return binding.root
 
-        val application = requireActivity().application as Application
-        val contentSession = application.sdk.createContentSession(
-            programId = "5f0f0a74-3798-47ed-9246-93e48230857b", // pass on your program Id
-            connectToDefaultChatRoom = false
-        ) as ContentSession
-
-        return ComposeView(requireContext()).apply {
-            setContent {
-                CustomTextAskComposable(
-                    sdk = application.sdk,
-                    contentSession = contentSession,
-                    widgetId = "6dedbbe1-4d91-423b-80d3-591b214223a9", //pass widget Id
-                    widgetKind = "text-ask" //pass widget kind
-                )
-            }
-        }
+//        val application = requireActivity().application as Application
+//        val contentSession = application.sdk.createContentSession(
+//            programId = "5f0f0a74-3798-47ed-9246-93e48230857b", // pass on your program Id
+//            connectToDefaultChatRoom = false
+//        ) as ContentSession
+//
+//        return ComposeView(requireContext()).apply {
+//            setContent {
+//                CustomTextAskComposable(
+//                    sdk = application.sdk,
+//                    contentSession = contentSession,
+//                    widgetId = "6dedbbe1-4d91-423b-80d3-591b214223a9", //pass widget Id
+//                    widgetKind = "text-ask" //pass widget kind
+//                )
+//            }
+//        }
 
     }
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
@@ -178,5 +178,5 @@ class SecondFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }*/
+    }
 }

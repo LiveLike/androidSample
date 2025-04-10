@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/quiz_rounded_corner_white_background"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/quiz_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prediction_tag"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAlignment="textStart"
+        android:letterSpacing="0.08"
+        android:fontFamily="@font/tnt_digital_bold"
+        android:textColor="@color/livelike_quiz_tag"
+        android:textSize="@dimen/quiz_tag_text_size" />
+
+
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/quiz_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/tnt_digital_medium"
+            android:gravity="start"
+            android:textColor="@color/livelike_quiz_text_color"
+            android:textSize="@dimen/quiz_title_text_size"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:letterSpacing="0.03"
+            tools:text="Who will score more goals in Euro 2024?" />
+
+
+    <LinearLayout
+        android:id="@+id/quiz"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt"
+        >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyl_prediction_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/custom_number_prediction_item"
+        />
+
+    <TextView
+        android:id="@+id/result_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcyl_prediction_list"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:text="bvnbvnbvbn"
+        android:textColor="@color/cheer_meter_team2_color2"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submit_btn"
+        app:layout_constraintTop_toBottomOf="@+id/result_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/submit_btn_background"
+        android:enabled="true"
+        android:letterSpacing="0.08"
+        android:text="@string/submit"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:fontFamily="@font/tnt_digital_bold"
+        android:textSize="14sp"/>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

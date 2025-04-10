@@ -35,7 +35,7 @@
             super.onViewCreated(view, savedInstanceState)
 
             binding.buttonFirst.setOnClickListener {
-                findNavController().navigate(R.id.action_ThirdFragment_to_ForthFragment)
+                findNavController().navigate(R.id.action_ThirdFragment_to_SixFragment)
             }
 
             val application = activity?.application as Application
